@@ -55,7 +55,7 @@
         v-if="filter == 'new' && voicer !== 'anilibria'"
         id="loadanimes"
         class="block"
-        @click="getMoreTitles(filter)"
+        @click="getMoreTitles()"
       >
         <div
           class="image"
@@ -152,11 +152,13 @@ export default {
         return d.substr(0, 200) + '...'
       }
     },
-    getMoreTitles () {
-      this.page = this.page + 1
-      const titles2 = loadTitles(this.filter, this.page).data
+    async getMoreTitles () {
+      this.page = this.page + 1;
+      let titles2 = await loadTitles(this.filter, this.page);
+      titles2 = titles2.data;
+      console.log(titles2);
       for (const i in titles2) {
-        this.titles.push(titles2[i])
+        this.titles.push(titles2[i]);
       }
     }
   }

@@ -17,7 +17,12 @@
       </div>
       <!-- -->
       <p style="font-weight: 600; margin-top: 1em;">Локальная база данных</p>
-      <button type="button" class="btn btn-dark" @click="clearDatabase();">Очистить базу данных</button>
+      <div style="display: flex; flex-wrap: wrap; gap: 0.5em;">
+        <button type="button" class="btn btn-dark" @click="clearDatabase();">Очистить базу данных</button>
+        <button type="button" class="btn btn-dark" @click="importDatabase();">Импорт базы данных</button>
+        <button type="button" class="btn btn-dark" @click="exportDatabase();">Экспорт базы данных</button>        
+      </div>
+
       <p style="font-weight: 600; margin-top: 1em;">Обновления</p>
       <button type="button" class="btn btn-dark" onclick="window.open('https://github.com/progzone122/AniShip', '_blank')">Открыть GitHub репозиторий</button>
       <!-- -->
@@ -49,6 +54,7 @@
 </template>
 <script>
 import { setEntry, getOneEntry, getAllKeys, removeEntry, clearStore } from '../../main/indexedDB.js'
+import { exportDatabase, importDatabase } from '../../main/settings.js'
 export default {
     name: 'Settings',
     data(){
@@ -58,7 +64,7 @@ export default {
           animevost_server: localStorage.getItem('animevost_server')
         }
     },
-    mounted() {
+    async mounted() {
       // this.videocdn_token = this.config.tokens.videocdn;
     },
     methods: {
@@ -73,6 +79,13 @@ export default {
       clearDatabase(){
         clearStore("favorites", "animevost");
         clearStore("favorites", "anilibria");
+        alert("База данных успешно очищена");
+      },
+      importDatabase(){
+        alert(importDatabase());
+      },
+      async exportDatabase(){
+        alert(await exportDatabase());
       }
     }
 }

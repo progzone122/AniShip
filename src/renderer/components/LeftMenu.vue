@@ -1,7 +1,7 @@
 <template>
   <ul class="left-menu">
     <div class="voicer">
-      <div class="block" :style="{ 'background-image': 'url(' + voicer_buttonImg + ')' }" @click="voicer_list = !voicer_list" />
+      <b-icon class="block" icon="bullseye" @click="voicer_list = !voicer_list" style="width: 1.4em;"></b-icon>
     </div>
     <transition name="fade">
       <div v-if="voicer_list" class="voicer-list">
@@ -36,10 +36,10 @@ export default {
   created() {
     switch(this.voicer){
       case "animevost":
-        this.voicer_buttonImg = '/_nuxt/src/renderer/assets/voicers/animevost.png';
+        this.voicer_buttonImg = '~assets/voicers/animevost.png';
         break;
       case "anilibria":
-        this.voicer_buttonImg = '/_nuxt/src/renderer/assets/voicers/anilibria.png';
+        this.voicer_buttonImg = '~assets/voicers/anilibria.png';
         break;
     }
   },
@@ -88,10 +88,10 @@ export default {
       this.voicer = v;
       switch(this.voicer){
         case "animevost":
-          this.voicer_buttonImg = '../../static/voicers/animevost.png';
+          this.voicer_buttonImg = '~assets/voicers/animevost.png';
           break;
         case "anilibria":
-          this.voicer_buttonImg = '../../static/voicers/anilibria.png';
+          this.voicer_buttonImg = '~assets/voicers/anilibria.png';
           break;
       }
       localStorage.setItem('voicer', v);
@@ -126,7 +126,7 @@ export default {
 .left-menu a:hover {
   border-radius: 0 0.5em 0.5em 0;
 }
-.left-menu a svg {
+svg {
   font-size: 1.6em;
   color: white;
 }
@@ -142,7 +142,6 @@ export default {
   border-radius: 1.5em;
   margin-left: 0.5em;
   background-size: cover;
-  background-color: white;
   cursor: pointer;
 }
 .voicer-list{

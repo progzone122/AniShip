@@ -98,7 +98,6 @@
               class="btn btn-dark"
               @click="
                 setQuality('720p');
-                startSeries(selectSeries);
               "
             >
               Animevost 720p
@@ -108,7 +107,6 @@
               class="btn btn-dark"
               @click="
                 setQuality('480p');
-                startSeries(selectSeries);
               "
             >
               Animevost 480p
@@ -250,6 +248,7 @@ export default {
     if (this.player === "animevost") {
       this.director = this.info.director;
       this.series = seriesFromTitle(this.name);
+      console.log(this.series);
       this.banner = this.info.urlImagePreview;
       this.description = this.info.description.replaceAll("<br />", "\n");
       this.ratingAnimevost = titleRatingAnimevost(this.info);
@@ -292,7 +291,7 @@ export default {
       }
     }
     //Списки избранного
-    this.title = getOneEntry('favorites', this.main_params.voicer, String(this.main_params.id));
+    this.title = await getOneEntry('favorites', this.main_params.voicer, String(this.main_params.id));
     console.log(this.title);
     // if (this.title !== null) {
     //   this.lastSeries = this.title[this.main_params.id].lastSeries; //<-- Временно закоменчено, функционал работает не стабильно
@@ -566,10 +565,14 @@ header {
   width: 100%;
   margin-bottom: 1em;
 }
-</style>
-<style>
 #player ul {
   background-color: #212529;
   padding: 1em;
 }
+#dropdown1{
+  width: 100%;
+}
+</style>
+<style>
+
 </style>

@@ -44,6 +44,8 @@ export default class BrowserWinHandler {
           webSecurity: false, // disable on dev to allow loading local resources
           nodeIntegration: true, // allow loading modules via the require () function
           contextIsolation: false, // https://github.com/electron/electron/issues/18037#issuecomment-806320028
+          enableRemoteModule: true,
+          enableremotemodule: true
         }
       }
     )
