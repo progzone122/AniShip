@@ -1,6 +1,6 @@
 {
   "name": "aniship",
-  "version": "0.1.5",
+  "version": "0.1.5-2",
   "description": "An electron-nuxt project",
   "main": "./dist/main/index.js",
   "scripts": {

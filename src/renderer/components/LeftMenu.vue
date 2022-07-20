@@ -1,7 +1,7 @@
 <template>
   <ul class="left-menu">
     <div class="voicer">
-      <b-icon class="block" icon="bullseye" @click="voicer_list = !voicer_list" style="width: 1.4em;"></b-icon>
+      <b-icon class="block" icon="bullseye" style="width: 1.4em;" @click="voicer_list = !voicer_list" />
     </div>
     <transition name="fade">
       <div v-if="voicer_list" class="voicer-list">

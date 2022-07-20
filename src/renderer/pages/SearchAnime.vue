@@ -159,11 +159,11 @@ export default {
         this.res.anilibria.push(res2[i]);
       }
     },
-    submit(){
+    async submit(){
       // if(this.searchInput.length >= 3){
       //   this.res = searchInName(this.searchInput).data;
       // }
-      this.res = searchInName(this.searchInput);
+      this.res = await searchInName(this.searchInput);
     }
   }
 };
