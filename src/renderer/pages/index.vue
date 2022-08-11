@@ -1,87 +1,97 @@
 <template>
   <div class="content">
-    <header>
-      <button
-        type="button"
-        :class="'btn btn-dark ' + topButtons['new']"
-        @click="menu('new')"
-      >
-        Новое
-      </button>
-      <button
-        type="button"
-        :class="'btn btn-dark ' + topButtons['ongoings']"
-        @click="menu('ongoings')"
-      >
-        Онгоинги
-      </button>
-      <button
-        v-if="voicer === 'animevost'"
-        type="button"
-        :class="'btn btn-dark ' + topButtons['anons']"
-        @click="menu('anons')"
-      >
-        Анонсы
-      </button>
-      <button
-        v-if="voicer === 'animevost'"
-        type="button"
-        :class="'btn btn-dark ' + topButtons['random']"
-        @click="menu('random')"
-      >
-        Мне повезёт
-      </button>
-    </header>
     <!-- -->
     <div class="container">
-      <div v-for="i in titles" :key="i.id" class="block">
-        <nuxt-link :to="{ path: 'WatchAnime', query: { id: i.id, voicer: voicer } }">
-          <div
-            class="image"
-            :style="{ 'background-image': 'url(' + i.urlImagePreview + ')' }"
-          >
-            <div class="faded">
-              <div class="anime-bottom">
-                <p class="anime-name">{{ i.title.split("/")[0] }}</p>
-                <p class="anime-description">
-                  {{ descr(i.description) }}
-                </p>
-              </div>
-            </div>
-          </div>
-        </nuxt-link>
-      </div>
-      <div
-        v-if="filter == 'new' && voicer !== 'anilibria'"
-        id="loadanimes"
-        class="block"
-        @click="getMoreTitles()"
-      >
-        <div
-          class="image"
-          style="
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            background-position: 0;
-          "
-        >
-          <b-icon icon="plus-lg" style="color: white; margin-bottom: 0.5em;" />
-          <p style="color: white">Загрузить ещё</p>
+      <p style="font-weight: 600; margin-top: 2em;">Последнее просмотренное</p>
+      <div class="titles" style="margin-bottom: 1em;">
+        <div v-for="i in recent_titles.slice(0, 4)" :key="i">
+          <TitleBlock :title="i" :voicer="voicer" />
         </div>
       </div>
+      <!-- -->
+      <ul class="categories">
+        <li 
+          @click="menu('new')"
+        >
+          <div class="icon-block">
+            <b-icon icon="clock" />
+          </div>
+          <p>Последняя активность</p>
+        </li>
+        <li
+          @click="menu('ongoings')"
+        >
+          <div class="icon-block">
+            <b-icon icon="calendar-week" />
+          </div>
+          <p>Онгоинги</p>
+        </li>
+        <li
+          v-if="voicer !== 'anilibria'"
+          @click="menu('anons')"
+        >
+          <div class="icon-block">
+            <b-icon icon="calendar2-date" />
+          </div>
+          <p>Анонсы</p>
+        </li>
+        <li
+          @click="menu('random')"
+        >
+          <div class="icon-block">
+            <b-icon icon="shuffle" />
+          </div>
+          <p>Мне повезёт</p>
+        </li>
+      </ul>
+      <div class="titles" style="margin-bottom: 2em;">
+        <div v-for="i in titles" :key="i.id">
+          <TitleBlock :title="i" :voicer="voicer" />
+        </div>
+      </div>
+      <!-- -->
+      <div v-if="filter !== 'random'" style="width: 100%; display: flex; justify-content: center;">
+        <button
+          squared
+          class="btn btn-dark"
+          style="
+              margin-bottom: 2em;
+            "
+          @click="getMoreTitles()"
+        >
+          Загрузить ещё
+        </button>
+      </div>
+      <!-- -->
     </div>
   </div>
 </template>
 
 <script>
 import { getDefaultVoicer } from '../../main/settings.js'
-import { loadTitles } from '../../main/api/api.js'
-
+import { loadTitles, getTitleInfo } from '../../main/api/api.js'
+import { getAllKeys } from '../../main/indexedDB.js'
+import TitleBlock from '../components/TitleBlock.vue'
 export default {
   name: 'IndexPage',
+  components: {
+    TitleBlock
+  },
+  async asyncData() {
+    let titles = await loadTitles('new', 1);
+    titles = titles.data;
+    const recent_titles_keys = await getAllKeys('recent_titles', getDefaultVoicer());
+    const recent_titles = [];
+    for(const i in recent_titles_keys){
+      recent_titles[i] = await getTitleInfo(Number(recent_titles_keys[i]), getDefaultVoicer());
+      recent_titles[i] = recent_titles[i].data[0];
+    }
+    console.log(recent_titles);
+    return {
+      titles,
+      recent_titles
+    }
+  },
   data() {
     return {
       filter: 'new',
@@ -95,11 +105,6 @@ export default {
       page: 1,
       voicer: getDefaultVoicer()
     }
-  },
-  async created() {
-    this.titles = await loadTitles('new', 1);
-    this.titles = this.titles.data;
-    console.log(this.titles);
   },
   methods: {
     async menu (filter) {
@@ -145,18 +150,10 @@ export default {
         break
       }
     },
-    descr (d) {
-      if (d.toString().includes('<br />')) {
-        return d.toString().replaceAll('<br />', '\n').substr(0, 200) + '...'
-      } else {
-        return d.substr(0, 200) + '...'
-      }
-    },
     async getMoreTitles () {
       this.page = this.page + 1;
       let titles2 = await loadTitles(this.filter, this.page);
       titles2 = titles2.data;
-      console.log(titles2);
       for (const i in titles2) {
         this.titles.push(titles2[i]);
       }
@@ -164,120 +161,6 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-.content {
-  width: 100vw;
-  padding-left: 2vw;
-}
-header {
-  width: 100%;
-  height: 6em;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding-right: 2em;
-}
-header .btn-dark {
-  margin-right: 1em;
-  border: none;
-}
-.content .container {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-columns: repeat(4, 21vw);
-  position: absolute;
-  left: 7vw;
-  gap: 1em;
-  padding-bottom: 10em;
-}
-.content .container .block:nth-child(1) {
-  grid-column: 1 / 4;
-  margin-bottom: 2em;
-  height: 100%;
-}
-.footer {
-  height: 20em;
-  width: 100%;
-}
-
-a {
-  text-decoration: none;
-}
-.block {
-  height: 30vw;
-  width: 100%;
-  background-color: #1a1e21;
-  overflow: hidden;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
-}
-.block .image {
-  width: 100%;
-  height: 100%;
-  background-size: cover;
-  padding: 0;
-  animation: zoom2 0.5s cubic-bezier(0, 0.55, 0.45, 1);
-  transform: scale(1);
-}
-.block .image .faded {
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    0deg,
-    rgba(0, 0, 0, 1) 0%,
-    rgba(0, 0, 0, 0.8813900560224089) 36%,
-    rgba(0, 0, 0, 0.404079131652661) 100%
-  );
-  display: flex;
-  align-items: flex-end;
-}
-.block .image:hover {
-  animation: zoom1 0.5s cubic-bezier(0, 0.55, 0.45, 1);
-  transform: scale(1.1);
-}
-.anime-bottom {
-  padding: 1.3em;
-}
-.block .anime-bottom p {
-  color: white;
-  margin: 0;
-}
-.anime-name {
-  font-weight: 500;
-}
-.anime-description {
-  font-size: 14px;
-}
-@keyframes zoom1 {
-  from {
-    transform: scale(1);
-  }
-  to {
-    transform: scale(1.1);
-  }
-}
-@keyframes zoom2 {
-  from {
-    transform: scale(1.1);
-  }
-  to {
-    transform: scale(1);
-  }
-}
-@keyframes zoom3 {
-  from {
-    transform: scale(1);
-  }
-  to {
-    transform: scale(0.9);
-  }
-}
-@keyframes zoom4 {
-  from {
-    transform: scale(0.9);
-  }
-  to {
-    transform: scale(1);
-  }
-}
+<style lang="scss">
+  @import "../assets/css/index.scss";
 </style>

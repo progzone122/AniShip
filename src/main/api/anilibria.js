@@ -1,8 +1,10 @@
 import $ from 'jquery'
+const random = require('random-integer');
 const url_anilibria = 'https://api.anilibria.tv/v2/'
 let resp = ''
 let req;
 let resp2 = []
+let after_limit = 0;
 export function getTitleInfoAnilibria (id) {
   $.ajax({
     type: 'GET',
@@ -31,9 +33,10 @@ export function getTitleInfoAnilibria (id) {
   return resp
 }
 export async function loadTitlesAnilibria (sort, page = 1) {
+  after_limit = page * 100 - 100;
   switch (sort) {
   case 'new':
-    req = await fetch(url_anilibria + 'getUpdates?limit=100&filter=names.ru,description,posters.small,id', {
+    req = await fetch(url_anilibria + 'getUpdates?after=' + after_limit + '&filter=names.ru,description,posters.small,id&limit=100', {
       method: 'GET',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       credentials: 'include'
@@ -54,6 +57,26 @@ export async function loadTitlesAnilibria (sort, page = 1) {
     return resp;
   case 'ongoings':
     req = await fetch(url_anilibria + 'advancedSearch?query={status.code} == 1&filter=names.ru,description,posters.small,id&limit=200', {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      credentials: 'include'
+    });
+    req = await req.json();
+    resp2 = []
+    for (const i in req) {
+      resp2[i] = {
+        id: req[i].id,
+        title: req[i].names.ru + ' /',
+        description: req[i].description,
+        urlImagePreview: 'https://anilibria.tv' + req[i].posters.small.url
+      }
+    }
+    resp = {
+      data: resp2
+    };
+    return resp;
+  case 'random':
+    req = await fetch(url_anilibria + 'advancedSearch?query={status.code} == 1&filter=names.ru,description,posters.small,id&limit=40&after=' + String(30), {
       method: 'GET',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       credentials: 'include'

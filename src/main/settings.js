@@ -25,16 +25,16 @@ export const getDefaultVoicer = () => {
 export const importDatabase = () => {
     const database = JSON.parse(ncp.paste());
     console.log(database);
-    for(let i in database.favorites.animevost){
+    for(const i in database.favorites.animevost){
         setEntry('favorites', 'animevost', String(i), database.favorites.animevost[i]);
     }
-    for(let i in database.favorites.anilibria){
+    for(const i in database.favorites.anilibria){
         setEntry('favorites', 'anilibria', String(i), database.favorites.anilibria[i]);
     }
     return "Успешный импорт бэкапа базы данных";
 }
 export const exportDatabase = async () => {
-    let database = {
+    const database = {
         version: process.env.npm_package_version,
         favorites: {
             animevost: {},
@@ -44,10 +44,10 @@ export const exportDatabase = async () => {
     let value;
     const animevost_keys = await getAllKeys('favorites', 'animevost');
     const anilibria_keys = await getAllKeys('favorites', 'anilibria');
-    for(let i in animevost_keys){
+    for(const i in animevost_keys){
         database.favorites.animevost[String(animevost_keys[i])] = await getOneEntry('favorites', 'animevost', String(animevost_keys[i]));
     }
-    for(let i in anilibria_keys){
+    for(const i in anilibria_keys){
         database.favorites.anilibria[String(anilibria_keys[i])] = await getOneEntry('favorites', 'anilibria', String(anilibria_keys[i]));
     }
     ncp.copy(JSON.stringify(database));

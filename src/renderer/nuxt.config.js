@@ -11,7 +11,10 @@ module.exports = {
     title: 'AniShip',
     meta: [{ charset: 'utf-8' }]
   },
-  css: ["~assets/css/videojs.css"],
+  css: [
+    "~assets/css/videojs.css",
+    '~assets/css/global.scss'
+  ],
   loading: false,
   plugins: [
     { src: '~/plugins/vue-infinite-loading', ssr: false }

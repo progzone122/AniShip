@@ -169,6 +169,7 @@
 </template>
 <script>
 // import videojs from "video.js";
+import M from "minimatch";
 import AnilibriaPlayer from "../components/AnilibriaPlayer.vue";
 import {
   loadPlaylistTitle,
@@ -184,7 +185,7 @@ import {
   getScreenshotsShikimori,
   titleRatingShikimori,
 } from "../../main/api/shikimori.js";
-import { setEntry, getOneEntry, removeEntry } from '../../main/indexedDB.js'
+import { setEntry, getOneEntry, removeEntry, getAllKeys } from '../../main/indexedDB.js'
 import { getAnilibriaSeries } from "../../main/api/anilibria.js";
 import { getTitleInfo } from "../../main/api/api.js";
 export default {
@@ -192,7 +193,7 @@ export default {
   components: {
     AnilibriaPlayer,
   },
-  asyncData() {
+  async asyncData() {
     return {
       playlistUrl: undefined,
       playlistUrl2: undefined,
@@ -215,6 +216,7 @@ export default {
         controls: true,
         sources: [],
       },
+      header: ""
     };
   },
   async created() {
@@ -245,57 +247,55 @@ export default {
     this.name = this.info.title;
     this.genres = this.info.genre;
     this.year = this.info.year;
-    if (this.player === "animevost") {
-      this.director = this.info.director;
-      this.series = seriesFromTitle(this.name);
-      console.log(this.series);
-      this.banner = this.info.urlImagePreview;
-      this.description = this.info.description.replaceAll("<br />", "\n");
-      this.ratingAnimevost = titleRatingAnimevost(this.info);
-      if (this.director === "") {
-        this.director = "Нет данных";
-      }
-      if (this.ratingAnimevost === "") {
-        this.ratingAnimevost = "Нет данных";
-      }
-      this.RatingShikimori = titleRatingShikimori(getTitleName(this.info.title));
-      if(getScreenshotsShikimori(getTitleShikimori(this.info.title.split("/")[0], this.year)[0].id).length !== 0){
-        this.header =
-          "https://shikimori.one/" +
-          getScreenshotsShikimori(
-            getTitleShikimori(getOriginalTitleName(this.info.title), this.year)[0].id
-          )[0].original;
-      }
-    }
-    if (this.player === "anilibria") {
-      this.series = this.info.series;
-      this.banner = this.info.urlImagePreview;
-      this.description = this.info.description;
-      this.RatingShikimori = titleRatingShikimori(this.info.title);
-      this.playlist = await getAnilibriaSeries(this.info.title.split("/")[0], this.year);
-      this.anilibriaPlayer_videoOptions.sources = [];
-      for (const i in this.playlist) {
-        this.anilibriaPlayer_videoOptions.sources.push({
-          name: this.playlist[i].name,
-          src: this.playlist[i].hd,
-          type: "application/x-mpegURL",
-        });
-      }
-      console.log(this.anilibriaPlayer_videoOptions.sources);
-      if(getScreenshotsShikimori(getTitleShikimori(this.info.title.split("/")[0], this.year)[0].id).length !== 0){
-        this.header =
-          "https://shikimori.one/" +
-          getScreenshotsShikimori(
-            getTitleShikimori(this.info.title.split("/")[0], this.year)[0].id
-          )[0].original;
-      }
+    switch (this.player) {
+      case "animevost":
+        this.director = this.info.director;
+        this.series = seriesFromTitle(this.name);
+        console.log(this.series);
+        this.banner = this.info.urlImagePreview;
+        this.description = this.info.description.replaceAll("<br />", "\n");
+        this.ratingAnimevost = titleRatingAnimevost(this.info);
+        if (this.director === "") {
+          this.director = "Нет данных";
+        }
+        if (this.ratingAnimevost === "") {
+          this.ratingAnimevost = "Нет данных";
+        }
+        if(getScreenshotsShikimori(getTitleShikimori(this.info.title.split("/")[0], this.year)[0].id).length !== 0){
+          this.header =
+            "https://shikimori.one/" +
+            getScreenshotsShikimori(
+              getTitleShikimori(getOriginalTitleName(this.info.title), this.year)[0].id
+            )[0].original;
+        }
+        break;
+      case "anilibria":
+        this.series = this.info.series;
+        this.banner = this.info.urlImagePreview;
+        this.description = this.info.description;
+        this.RatingShikimori = titleRatingShikimori(this.info.title);
+        this.playlist = await getAnilibriaSeries(this.info.title.split("/")[0], this.year);
+        this.anilibriaPlayer_videoOptions.sources = [];
+        for (const i in this.playlist) {
+          this.anilibriaPlayer_videoOptions.sources.push({
+            name: this.playlist[i].name,
+            src: this.playlist[i].hd,
+            type: "application/x-mpegURL",
+          });
+        }
+        console.log(this.anilibriaPlayer_videoOptions.sources);
+        if(getScreenshotsShikimori(getTitleShikimori(this.info.title.split("/")[0], this.year)[0].id).length !== 0){
+          this.header =
+            "https://shikimori.one/" +
+            getScreenshotsShikimori(
+              getTitleShikimori(this.info.title.split("/")[0], this.year)[0].id
+            )[0].original;
+        }
+        break;
     }
     //Списки избранного
     this.title = await getOneEntry('favorites', this.main_params.voicer, String(this.main_params.id));
-    console.log(this.title);
-    // if (this.title !== null) {
-    //   this.lastSeries = this.title[this.main_params.id].lastSeries; //<-- Временно закоменчено, функционал работает не стабильно
-    // }
+    // console.log(this.title);
     if (this.title !== null) {
       switch (this.title.list) {
         case "watch":
@@ -325,6 +325,8 @@ export default {
           break;
       }
     }
+    //Add title to recent
+    setEntry('recent_titles', this.main_params.voicer, String(this.main_params.id));
   },
   methods: {
     startSeries(series) {
@@ -412,7 +414,7 @@ export default {
           this.playlistUrl = this.playlist[0];
           break;
       }
-    },
+    }
   },
 };
 </script>
@@ -564,6 +566,7 @@ header {
   flex-direction: column;
   width: 100%;
   margin-bottom: 1em;
+  margin-top: 1em;
 }
 #player ul {
   background-color: #212529;

@@ -88,15 +88,9 @@ export default {
   },
 };
 </script>
-<style>
-.c {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 2em;
-}
+<style scoped>
 .series {
-  width: 65vw;
+  width: 100%;
   display: flex;
   flex-wrap: wrap;
   list-style-type: none;

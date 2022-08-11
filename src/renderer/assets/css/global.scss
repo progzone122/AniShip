@@ -1,0 +1,33 @@
+@import "theme.scss";
+
+h1{
+    color: $h1_color;
+}
+h2{
+    color: $h2_color;
+}
+h3{
+    color: $h3_color;
+}
+h4{
+    color: $h4_color
+}
+p{
+    color: $p_color;
+}
+body {
+    width: 100vw;
+    background-color: $body_backgroundColor;
+    height: 100vh;
+    overflow-x: hidden;
+}
+::-webkit-scrollbar-track {
+    border-radius: $scrollbarTrack_borderRadius;
+}
+::-webkit-scrollbar {
+    width: $scrollbar_width;
+}
+::-webkit-scrollbar-thumb {
+    border-radius: $scrollbarThumb_borderRadius;
+    background: $scrollbarThumb_color;
+}
