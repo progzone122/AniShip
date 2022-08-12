@@ -102,7 +102,8 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style scoped lang="scss">
+@import "../assets/css/theme.scss";
 .left-menu {
   list-style-type: none;
   height: 100%;
@@ -110,44 +111,44 @@ export default {
   width: 5em;
   position: fixed;
   top: 0;
-}
-.left-menu a {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 1em;
-  height: 4em;
-  padding-left: 0.5;
-}
-.left-menu .active {
-  border-radius: 0 0.5em 0.5em 0;
-  background-color: #1e1e1e;
-}
-.left-menu a:hover {
-  border-radius: 0 0.5em 0.5em 0;
+  a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1em;
+    height: 4em;
+    padding-left: 0.5;
+    &:hover {
+        border-radius: 0 0.5em 0.5em 0;
+    }
+  }
+  .active {
+    border-radius: 0 0.5em 0.5em 0;
+    background-color: $leftMenuVoicer_color;
+  }
 }
 svg {
-  font-size: 1.6em;
-  color: white;
+  font-size: $leftMenuSvg_size;
+  color: $svg_color;
 }
 .voicer{
   width: 4em;
   height: 4em;
   padding: 0.7em;
   margin-bottom: 1em;
-}
-.voicer .block{
-  width: 100%;
-  height: 100%;
-  border-radius: 1.5em;
-  margin-left: 0.5em;
-  background-size: cover;
-  cursor: pointer;
+  .block{
+    width: 100%;
+    height: 100%;
+    border-radius: 1.5em;
+    margin-left: 0.5em;
+    background-size: cover;
+    cursor: pointer;
+  }
 }
 .voicer-list{
   width: 4em;
   position: absolute;
-  background-color: #1e1e1e;
+  background-color: $leftMenuVoicer_color;
   padding: 0.7em;
   display: flex;
   flex-direction: column;
@@ -155,14 +156,14 @@ svg {
   gap: 2em;
   left: 0.5em;
   border-radius: 1em;
-}
-.voicer-list .block{
-  width: 100%;
-  height: 2.6em;
-  border-radius: 1.5em;
-  background-size: cover;
-  background-color: white;
-  cursor: pointer;
+  .block{
+    width: 100%;
+    height: 2.6em;
+    border-radius: 1.5em;
+    background-size: cover;
+    background-color: white;
+    cursor: pointer;
+  }
 }
 .fade-enter-active, .fade-leave-active {
   transition: opacity .5s;

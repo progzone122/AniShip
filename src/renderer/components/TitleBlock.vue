@@ -22,7 +22,9 @@ export default {
     }
 }
 </script>
-<style scoped>
+<style scoped lang="scss">
+@import "../assets/css/theme.scss";
+@import "../assets/css/animations.scss";
 a{
     text-decoration: none;
 }
@@ -37,10 +39,10 @@ a{
     padding: 0;
     background-size: cover;
     transform: scale(1);
-}
-.preview:hover{
-    animation: zoom 0.5s cubic-bezier(0, 0.55, 0.45, 1);
-    transform: scale(0.9);
+    &:hover{
+        animation: zoom 0.5s cubic-bezier(0, 0.55, 0.45, 1);
+        transform: scale(0.9);
+    }
 }
 .block{
     padding: 1em;
@@ -57,15 +59,6 @@ a{
     align-items: flex-end;
 }
 .name{
-    color: white;
     font-size: medium;
-}
-@keyframes zoom {
-  from {
-    transform: scale(1);
-  }
-  to {
-    transform: scale(0.9);
-  }
 }
 </style>

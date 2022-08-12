@@ -90,10 +90,14 @@ export default {
     }
 }
 </script>
-<style scoped>
-h4, p{
-  color: white;
-} 
+<style scoped lang="scss">
+@import "../assets/css/theme.scss";
+h4{
+  color: $h4_color;
+}
+p{
+  color: $p_color;
+}
 .content {
   width: 100vw;
   padding-left: 2vw;
@@ -121,9 +125,10 @@ iframe{
   padding-bottom: 10em;
 }
 </style>
-<style>
+<style lang="scss">
+@import "../assets/css/theme.scss";
 #animevostapi_dropdown ul{
-  background-color: #212529;
+  background-color: $liBlock_backgroundColor;
   padding: 1em;
 }
 </style>

@@ -161,6 +161,55 @@ export default {
   }
 }
 </script>
-<style lang="scss">
-  @import "../assets/css/index.scss";
+<style scoped lang="scss">
+  @import "../assets/css/theme.scss";
+  @import "../assets/css/animations.scss";
+  .container{
+      margin-top: 3em;
+      margin-left: 9vw;
+      width: 100vw;
+  }
+  .categories{
+      width: 100%;
+      padding: 0;
+      list-style-type: none;
+      font-weight: 600;
+      display: grid;
+      gap: 2em;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      li{
+          box-shadow: 0 0 10px rgba(0,0,0,0.5);
+          background-color: $liBlock_backgroundColor;
+          height: 5em;
+          display: flex;
+          align-items: center;
+          cursor: pointer;
+          transform: scale(1s);
+          &:hover{
+              animation: zoom 0.3s cubic-bezier(0, 0.55, 0.45, 1);
+              transform: scale(0.9);
+          }
+      }
+      p{
+          margin-top: 1em;
+      }
+      .icon-block{
+          width: 5em;
+          height: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+              svg{
+                  color: $svg_color;
+                  font-size: $svgLeftMenu_size;
+              }
+      }
+  }
+  .titles{
+      width: 100%;
+      display: grid;
+      gap: $indexTitles_gap;
+      grid-template-columns: repeat($indexTitles_columns, 1fr);
+      padding: 0;
+  }
 </style>

@@ -73,6 +73,7 @@ export default {
 .content {
   width: 100vw;
   padding-left: 2vw;
+  padding-top: 2em;
 }
 header {
   width: 100%;
@@ -92,7 +93,6 @@ header .btn-dark {
   align-items: center;
   padding-right: 3vw;
   width: 90%;
-  /* background-color: aqua; */
 }
 .content {
   overflow-y: scroll;

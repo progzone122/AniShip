@@ -25,7 +25,8 @@ export default {
     }
 }
 </script>
-<style scoped>
+<style scoped lang="scss">
+    @import "../assets/css/theme.scss";
     .block{
         height: 60%;
         width: 80%;
@@ -34,10 +35,10 @@ export default {
         flex-direction: column;
         gap: 0.5em;
         margin-bottom: 3em;
-    }
-    .block iframe{
-        height: 50vh;
-        margin-top: 0;
+        iframe{
+            height: 50vh;
+            margin-top: 0;
+        }
     }
     .tags{
         padding: 0;
@@ -47,12 +48,12 @@ export default {
         display: flex;
         flex-wrap: wrap;
         gap: 1em;
-    }
-    .tags button{
-        border-radius: 1em;
-        height: 2.3em;
+        button {
+            border-radius: 1em;
+            height: 2.3em;
+        }
     }
     h4{
-        color: white;
+        color: $h4_color;
     }
 </style>

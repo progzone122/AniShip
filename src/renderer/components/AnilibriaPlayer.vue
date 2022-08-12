@@ -88,7 +88,8 @@ export default {
   },
 };
 </script>
-<style scoped>
+<style scoped lang="scss">
+@import "../assets/css/theme.scss";
 .series {
   width: 100%;
   display: flex;
@@ -97,16 +98,16 @@ export default {
   padding: 0;
   gap: 1em;
   justify-content: center;
-}
-.series li {
-  margin: 0;
-  padding-top: 1em;
-  padding-left: 1em;
-  padding-right: 1em;
-  background-color: rgb(39, 39, 39);
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
-}
-.series li p {
-  color: white;
+  li {
+    margin: 0;
+    padding-top: 1em;
+    padding-left: 1em;
+    padding-right: 1em;
+    background-color: $seriesButtons_color;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+    p {
+      color: $p_color;
+    }
+  }
 }
 </style>
