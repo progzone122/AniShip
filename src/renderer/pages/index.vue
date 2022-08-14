@@ -2,7 +2,7 @@
   <div class="content">
     <!-- -->
     <div class="container">
-      <p style="font-weight: 600; margin-top: 2em;">Последнее просмотренное</p>
+      <p v-if="recent_titles.length !== 0" style="font-weight: 600; margin-top: 2em;">Последнее просмотренное</p>
       <div class="titles" style="margin-bottom: 1em;">
         <div v-for="i in recent_titles.slice(0, 4)" :key="i">
           <TitleBlock :title="i" :voicer="voicer" />
@@ -70,7 +70,7 @@
 <script>
 import { getDefaultVoicer } from '../../main/settings.js'
 import { loadTitles, getTitleInfo } from '../../main/api/api.js'
-import { getAllKeys } from '../../main/indexedDB.js'
+import { getAllKeys, getOneEntry } from '../../main/indexedDB.js'
 import TitleBlock from '../components/TitleBlock.vue'
 export default {
   name: 'IndexPage',
@@ -81,9 +81,10 @@ export default {
     let titles = await loadTitles('new', 1);
     titles = titles.data;
     const recent_titles_keys = await getAllKeys('recent_titles', getDefaultVoicer());
-    const recent_titles = [];
-    for(const i in recent_titles_keys){
-      recent_titles[i] = await getTitleInfo(Number(recent_titles_keys[i]), getDefaultVoicer());
+    let recent_titles = [];
+    for(const i in recent_titles_keys.sort((a, b) => b - a)){
+      recent_titles[i] = await getOneEntry('recent_titles', getDefaultVoicer(), String(recent_titles_keys[i]));
+      recent_titles[i] = await getTitleInfo(Number(recent_titles[i]), getDefaultVoicer());
       recent_titles[i] = recent_titles[i].data[0];
     }
     console.log(recent_titles);

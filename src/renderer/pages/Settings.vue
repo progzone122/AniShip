@@ -22,6 +22,12 @@
         <button type="button" class="btn btn-dark" @click="importDatabase();">Импорт базы данных</button>
         <button type="button" class="btn btn-dark" @click="exportDatabase();">Экспорт базы данных</button>        
       </div>
+      <!-- -->
+
+      <p style="font-weight: 600; margin-top: 1em;">Последнее просмотренное</p>
+      <div style="display: flex; flex-wrap: wrap; gap: 0.5em;">
+        <button type="button" class="btn btn-dark" @click="clearRecentHistory();">Очистить историю</button>
+      </div>
 
       <p style="font-weight: 600; margin-top: 1em;">Обновления</p>
       <button type="button" class="btn btn-dark" onclick="window.open('https://github.com/progzone122/AniShip', '_blank')">Открыть GitHub репозиторий</button>
@@ -86,6 +92,11 @@ export default {
       },
       async exportDatabase(){
         alert(await exportDatabase());
+      },
+      clearRecentHistory(){
+        clearStore("recent_titles", "animevost");
+        clearStore("recent_titles", "anilibria");
+        alert("История последнего просмотренного успешно очищена");
       }
     }
 }

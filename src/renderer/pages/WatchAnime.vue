@@ -168,8 +168,6 @@
   </div>
 </template>
 <script>
-// import videojs from "video.js";
-import M from "minimatch";
 import AnilibriaPlayer from "../components/AnilibriaPlayer.vue";
 import {
   loadPlaylistTitle,
@@ -247,6 +245,22 @@ export default {
     this.name = this.info.title;
     this.genres = this.info.genre;
     this.year = this.info.year;
+    //Add title to recent
+    let r_keys = await getAllKeys('recent_titles', this.main_params.voicer);
+    if(r_keys.length !== 0){
+      for (let i in r_keys){
+        let rr = await getOneEntry('recent_titles', this.main_params.voicer, String(i));
+        if(rr === String(this.main_params.id)){
+          break;
+        }
+        if(i < 1){
+          setEntry('recent_titles', this.main_params.voicer, String(r_keys.length), String(this.main_params.id));   
+        }
+      }
+    }else{
+      setEntry('recent_titles', this.main_params.voicer, "0", String(this.main_params.id));
+    }
+    //
     switch (this.player) {
       case "animevost":
         this.director = this.info.director;
@@ -295,7 +309,6 @@ export default {
     }
     //Списки избранного
     this.title = await getOneEntry('favorites', this.main_params.voicer, String(this.main_params.id));
-    // console.log(this.title);
     if (this.title !== null) {
       switch (this.title.list) {
         case "watch":
@@ -325,8 +338,6 @@ export default {
           break;
       }
     }
-    //Add title to recent
-    setEntry('recent_titles', this.main_params.voicer, String(this.main_params.id));
   },
   methods: {
     startSeries(series) {
@@ -418,7 +429,8 @@ export default {
   },
 };
 </script>
-<style scoped>
+<style scoped lang="scss">
+@import "../assets/css/theme.scss";
 .container {
   padding-top: 3.5em;
   padding-left: 3vw;
@@ -429,16 +441,32 @@ export default {
   overflow-y: scroll;
   padding-bottom: 3em;
   overflow-y: hidden;
+  .banner {
+    width: 22vw;
+    height: 30vw;
+    background-size: cover;
+    padding: 0;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+  }
+  .content-left {
+    margin-right: 1em;
+  }
+  .content-right {
+    width: 100%;
+    padding: 1em;
+    gap: 1em;
+    display: flex;
+    flex-direction: column;
+    h4 {
+      color: $h4_color;
+    }
+    p {
+      color: $p_color;
+    }
+  }
 }
 .content2 {
   display: flex;
-}
-.content .banner {
-  width: 22vw;
-  height: 30vw;
-  background-size: cover;
-  padding: 0;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
 }
 .fadded {
   width: 100%;
@@ -450,42 +478,6 @@ header .fadded {
   display: flex;
   align-items: flex-end;
   padding: 1em;
-}
-header .fadded h4 {
-  margin-left: 0.4em;
-  color: rgba(255, 255, 255, 0.5);
-  font-size: large;
-}
-header .fadded button {
-  display: flex;
-  height: 2.5em;
-  margin-left: 1em;
-}
-header .fadded button i {
-  color: rgba(255, 255, 255, 0.5);
-  margin: 0;
-  margin-left: 0.8em;
-  margin-bottom: 0.7em;
-}
-header .fadded button p {
-  color: rgba(255, 255, 255, 0.5);
-}
-header .fadded a {
-  text-decoration: none;
-}
-.content .content-left {
-  margin-right: 1em;
-}
-.content .content-right {
-  width: 100%;
-  padding: 1em;
-  gap: 1em;
-  display: flex;
-  flex-direction: column;
-}
-.content .content-right h4,
-.content .content-right p {
-  color: white;
 }
 .content .content-right #info-blocks {
   display: grid;
@@ -499,7 +491,7 @@ header .fadded a {
 .content .content-right #info-blocks li {
   /* width: 15vw;
   height: 10vw; */
-  background-color: rgb(39, 39, 39);
+  background-color: $watchAnimeBlocks_backgroundColor;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
   display: flex;
   flex-direction: column;
@@ -531,7 +523,7 @@ header .fadded a {
   padding-top: 1em;
   padding-left: 1em;
   padding-right: 1em;
-  background-color: rgb(39, 39, 39);
+  background-color: $watchAnimeSeries_backgroundColor;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
 }
 .series li p {
