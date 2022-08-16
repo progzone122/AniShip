@@ -87,7 +87,6 @@ export default {
       recent_titles[i] = await getTitleInfo(Number(recent_titles[i]), getDefaultVoicer());
       recent_titles[i] = recent_titles[i].data[0];
     }
-    console.log(recent_titles);
     return {
       titles,
       recent_titles

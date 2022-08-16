@@ -25,6 +25,13 @@
       >
         Брошено
       </button>
+      <button
+        type="button"
+        :class="'btn btn-dark ' + recentWatchButton"
+        @click="list('recent_titles')"
+      >
+        <b-icon icon="clock" />
+      </button>
     </header>
     <div class="container">
     <div v-if="titles.animevost.length !== 0">
@@ -69,6 +76,7 @@ export default {
       willWatchButton: "",
       watchedButton: "",
       abandonedWatchButton: "",
+      recentWatchButton: "",
       titles: {
         animevost: [],
         anilibria: [],
@@ -103,21 +111,22 @@ export default {
             anilibria: [],
           };
             for(const i in this.animevost_keys){
-            const title = await getOneEntry('favorites', 'animevost', this.animevost_keys[i]);
-            if (title.list === "watch") {
-                this.titles.animevost.push(getTitleInfo(Number(this.animevost_keys[i]), "animevost").data[0]);
-            }
+              const title = await getOneEntry('favorites', 'animevost', this.animevost_keys[i]);
+              if (title.list === "watch") {
+                  this.titles.animevost.push(getTitleInfo(Number(this.animevost_keys[i]), "animevost").data[0]);
+              }
             }
             for(const i in this.anilibria_keys){
-            const title = await getOneEntry('favorites', 'anilibria', this.anilibria_keys[i]);
-            if (title.list === "watch") {
-                this.titles.anilibria.push(getTitleInfo(Number(this.anilibria_keys[i]), "anilibria").data[0]);
-            }
+              const title = await getOneEntry('favorites', 'anilibria', this.anilibria_keys[i]);
+              if (title.list === "watch") {
+                  this.titles.anilibria.push(getTitleInfo(Number(this.anilibria_keys[i]), "anilibria").data[0]);
+              }
             }
           this.watchButton = "active";
           this.willWatchButton = "";
           this.watchedButton = "";
           this.abandonedWatchButton = "";
+          this.recentWatchButton = "";
           break;
         case "will":
           this.titles = {
@@ -125,21 +134,22 @@ export default {
             anilibria: [],
           };
             for(const i in this.animevost_keys){
-            const title = await getOneEntry('favorites', 'animevost', this.animevost_keys[i]);
-            if (title.list === "will") {
-                this.titles.animevost.push(getTitleInfo(Number(this.animevost_keys[i]), "animevost").data[0]);
-            }
+              const title = await getOneEntry('favorites', 'animevost', this.animevost_keys[i]);
+              if (title.list === "will") {
+                  this.titles.animevost.push(getTitleInfo(Number(this.animevost_keys[i]), "animevost").data[0]);
+              }
             }
             for(const i in this.anilibria_keys){
-            const title = await getOneEntry('favorites', 'anilibria', this.anilibria_keys[i]);
-            if (title.list === "will") {
-                this.titles.anilibria.push(getTitleInfo(Number(this.anilibria_keys[i]), "anilibria").data[0]);
-            }
+              const title = await getOneEntry('favorites', 'anilibria', this.anilibria_keys[i]);
+              if (title.list === "will") {
+                  this.titles.anilibria.push(getTitleInfo(Number(this.anilibria_keys[i]), "anilibria").data[0]);
+              }
             }
           this.watchButton = "";
           this.willWatchButton = "active";
           this.watchedButton = "";
           this.abandonedWatchButton = "";
+          this.recentWatchButton = "";
           break;
         case "watched":
           this.titles = {
@@ -147,21 +157,22 @@ export default {
             anilibria: [],
           };
             for(const i in this.animevost_keys){
-            const title = await getOneEntry('favorites', 'animevost', this.animevost_keys[i]);
-            if (title.list === "watched") {
-                this.titles.animevost.push(getTitleInfo(Number(this.animevost_keys[i]), "animevost").data[0]);
-            }
+              const title = await getOneEntry('favorites', 'animevost', this.animevost_keys[i]);
+              if (title.list === "watched") {
+                  this.titles.animevost.push(getTitleInfo(Number(this.animevost_keys[i]), "animevost").data[0]);
+              }
             }
             for(const i in this.anilibria_keys){
-            const title = await getOneEntry('favorites', 'anilibria', this.anilibria_keys[i]);
-            if (title.list === "watched") {
-                this.titles.anilibria.push(getTitleInfo(Number(this.anilibria_keys[i]), "anilibria").data[0]);
-            }
+              const title = await getOneEntry('favorites', 'anilibria', this.anilibria_keys[i]);
+              if (title.list === "watched") {
+                  this.titles.anilibria.push(getTitleInfo(Number(this.anilibria_keys[i]), "anilibria").data[0]);
+              }
             }
           this.watchButton = "";
           this.willWatchButton = "";
           this.watchedButton = "active";
           this.abandonedWatchButton = "";
+          this.recentWatchButton = "";
           break;
         case "abandoned":
           this.titles = {
@@ -169,21 +180,47 @@ export default {
             anilibria: [],
           };
             for(const i in this.animevost_keys){
-            const title = await getOneEntry('favorites', 'animevost', this.animevost_keys[i]);
-            if (title.list === "abandoned") {
-                this.titles.animevost.push(getTitleInfo(Number(this.animevost_keys[i]), "animevost").data[0]);
-            }
+              const title = await getOneEntry('favorites', 'animevost', this.animevost_keys[i]);
+              if (title.list === "abandoned") {
+                  this.titles.animevost.push(getTitleInfo(Number(this.animevost_keys[i]), "animevost").data[0]);
+              }
             }
             for(const i in this.anilibria_keys){
-            const title = await getOneEntry('favorites', 'anilibria', this.anilibria_keys[i]);
-            if (title.list === "abandoned") {
-                this.titles.anilibria.push(getTitleInfo(Number(this.anilibria_keys[i]), "anilibria").data[0]);
-            }
+              const title = await getOneEntry('favorites', 'anilibria', this.anilibria_keys[i]);
+              if (title.list === "abandoned") {
+                  this.titles.anilibria.push(getTitleInfo(Number(this.anilibria_keys[i]), "anilibria").data[0]);
+              }
             }
           this.watchButton = "";
           this.willWatchButton = "";
           this.watchedButton = "";
           this.abandonedWatchButton = "active";
+          this.recentWatchButton = "";
+          break;
+        case "recent_titles":
+          this.titles = {
+            animevost: [],
+            anilibria: [],
+          };
+            let recent_titles_keys = await getAllKeys('recent_titles', "animevost");
+            let recent_titles = [];
+            for(const i in recent_titles_keys.sort((a, b) => b - a)){
+              recent_titles[i] = await getOneEntry('recent_titles', "animevost", String(recent_titles_keys[i]));
+              recent_titles[i] = await getTitleInfo(Number(recent_titles[i]), "animevost");
+              this.titles.animevost.push(recent_titles[i].data[0]);
+            }
+            recent_titles_keys = await getAllKeys('recent_titles', "anilibria");
+            recent_titles = [];
+            for(const i in recent_titles_keys.sort((a, b) => b - a)){
+              recent_titles[i] = await getOneEntry('recent_titles', "anilibria", String(recent_titles_keys[i]));
+              recent_titles[i] = await getTitleInfo(Number(recent_titles[i]), "anilibria");
+              this.titles.anilibria.push(recent_titles[i].data[0]);
+            }
+            this.watchButton = "";
+            this.willWatchButton = "";
+            this.watchedButton = "";
+            this.abandonedWatchButton = "";
+            this.recentWatchButton = "active";
           break;
       }
     }
