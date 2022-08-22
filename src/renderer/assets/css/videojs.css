@@ -394,7 +394,8 @@
 }
 
 .video-js[tabindex="-1"] {
-  outline: none;
+  width:100% !important;
+  height: 100vh !important;
 }
 
 .video-js *,
