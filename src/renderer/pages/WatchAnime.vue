@@ -246,20 +246,11 @@ export default {
     this.genres = this.info.genre;
     this.year = this.info.year;
     //Add title to recent
-    let r_keys = await getAllKeys('recent_titles', this.main_params.voicer);
-    if(r_keys.length !== 0){
-      for (let i in r_keys){
-        let rr = await getOneEntry('recent_titles', this.main_params.voicer, String(i));
-        if(rr === String(this.main_params.id)){
-          break;
-        }
-        if(i < 1){
-          setEntry('recent_titles', this.main_params.voicer, String(r_keys.length), String(this.main_params.id));   
-        }
-      }
-    }else{
-      setEntry('recent_titles', this.main_params.voicer, "0", String(this.main_params.id));
+    let recent_title = await getOneEntry('recent_titles', this.main_params.voicer, String(this.main_params.id));
+    if(recent_title === null){
+      setEntry('recent_titles', this.main_params.voicer, String(this.main_params.id), {});
     }
+    
     //
     switch (this.player) {
       case "animevost":

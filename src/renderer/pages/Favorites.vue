@@ -34,32 +34,32 @@
       </button>
     </header>
     <div class="container">
-    <div v-if="titles.animevost.length !== 0">
-      <h4 style="color: white">Animevost</h4>
-      <hr style="width: 90vw; color: white">
-      <div class="container2">
-        <div v-for="i in titles.animevost" v-if="titles" :key="i.id" class="block">
-          <nuxt-link
-            :to="{ name: 'WatchAnime', query: { id: i.id, voicer: 'animevost' } }"
-          >
-            <TitleBlock :title="i" voicer="animevost" />
-          </nuxt-link>
+      <div v-if="titles.animevost.length !== 0">
+        <h4 style="color: white">Animevost</h4>
+        <hr style="width: 90vw; color: white">
+        <div class="container2">
+          <div v-for="i in titles.animevost" v-if="titles" :key="i.id" class="block">
+            <nuxt-link
+              :to="{ name: 'WatchAnime', query: { id: i.id, voicer: 'animevost' } }"
+            >
+              <TitleBlock :title="i" voicer="animevost" />
+            </nuxt-link>
+          </div>
         </div>
       </div>
-    </div>
-    <div v-if="titles.anilibria.length !== 0">
-      <h4 style="color: white; margin-top: 1em">Anilibria</h4>
-      <hr style="width: 90vw; color: white">
-      <div class="container2">
-        <div v-for="i in titles.anilibria" v-if="titles" :key="i.id" class="block">
-          <nuxt-link
-            :to="{ name: 'WatchAnime', query: { id: i.id, voicer: 'anilibria' } }"
-          >
-            <TitleBlock :title="i" voicer="anilibria" />
-          </nuxt-link>
+      <div v-if="titles.anilibria.length !== 0">
+        <h4 style="color: white; margin-top: 1em">Anilibria</h4>
+        <hr style="width: 90vw; color: white">
+        <div class="container2">
+          <div v-for="i in titles.anilibria" v-if="titles" :key="i.id" class="block">
+            <nuxt-link
+              :to="{ name: 'WatchAnime', query: { id: i.id, voicer: 'anilibria' } }"
+            >
+              <TitleBlock :title="i" voicer="anilibria" />
+            </nuxt-link>
+          </div>
         </div>
       </div>
-    </div>
     </div>
   </div>
 </template>
@@ -69,6 +69,9 @@ import { getTitleInfo } from "../../main/api/api.js";
 import TitleBlock from '../components/TitleBlock.vue';
 export default {
   name: "Favorites",
+  components: {
+    TitleBlock
+  },
   asyncData() {
     return {
       database: {},
@@ -82,9 +85,6 @@ export default {
         anilibria: [],
       },
     };
-  },
-  components: {
-    TitleBlock
   },
   async created(){
     this.animevost_keys = await getAllKeys('favorites', 'animevost');
@@ -204,16 +204,14 @@ export default {
           };
             let recent_titles_keys = await getAllKeys('recent_titles', "animevost");
             let recent_titles = [];
-            for(const i in recent_titles_keys.sort((a, b) => b - a)){
-              recent_titles[i] = await getOneEntry('recent_titles', "animevost", String(recent_titles_keys[i]));
-              recent_titles[i] = await getTitleInfo(Number(recent_titles[i]), "animevost");
+            for(let i in recent_titles_keys.sort((a, b) => b - a)){
+              recent_titles[i] = await getTitleInfo(Number(recent_titles_keys[i]), "animevost");
               this.titles.animevost.push(recent_titles[i].data[0]);
             }
             recent_titles_keys = await getAllKeys('recent_titles', "anilibria");
             recent_titles = [];
-            for(const i in recent_titles_keys.sort((a, b) => b - a)){
-              recent_titles[i] = await getOneEntry('recent_titles', "anilibria", String(recent_titles_keys[i]));
-              recent_titles[i] = await getTitleInfo(Number(recent_titles[i]), "anilibria");
+            for(let i in recent_titles_keys.sort((a, b) => b - a)){
+              recent_titles[i] = await getTitleInfo(Number(recent_titles_keys[i]), "anilibria");
               this.titles.anilibria.push(recent_titles[i].data[0]);
             }
             this.watchButton = "";

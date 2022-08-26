@@ -81,10 +81,9 @@ export default {
     let titles = await loadTitles('new', 1);
     titles = titles.data;
     const recent_titles_keys = await getAllKeys('recent_titles', getDefaultVoicer());
-    let recent_titles = [];
-    for(const i in recent_titles_keys.sort((a, b) => b - a)){
-      recent_titles[i] = await getOneEntry('recent_titles', getDefaultVoicer(), String(recent_titles_keys[i]));
-      recent_titles[i] = await getTitleInfo(Number(recent_titles[i]), getDefaultVoicer());
+    const recent_titles = [];
+    for(let i in recent_titles_keys.sort((a, b) => b - a)){
+      recent_titles[i] = await getTitleInfo(Number(recent_titles_keys[i]), getDefaultVoicer());
       recent_titles[i] = recent_titles[i].data[0];
     }
     return {
