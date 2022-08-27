@@ -19,9 +19,8 @@
       <p style="font-weight: 600; margin-top: 1em;">Локальная база данных</p>
       <div style="display: flex; flex-wrap: wrap; gap: 0.5em;">
         <button type="button" class="btn btn-dark" @click="clearDatabase();">Очистить базу данных</button>
-        <button type="button" class="btn btn-dark" @click="importDatabase();">Импорт базы данных</button>
-        <button type="button" class="btn btn-dark" @click="exportDatabase();">Экспорт базы данных</button>
         <label class="btn btn-dark">Импорт базы данных<input @change="importDatabase();" type="file" id="importDirectory1" webkitfile style="display: none;"></label>
+        <button type="button" class="btn btn-dark" @click="exportDatabase();">Экспорт базы данных</button>
       </div>
       <!-- -->
 
