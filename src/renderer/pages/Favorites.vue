@@ -204,13 +204,13 @@ export default {
           };
             let recent_titles_keys = await getAllKeys('recent_titles', "animevost");
             let recent_titles = [];
-            for(let i in recent_titles_keys.sort((a, b) => b - a)){
+            for(const i in recent_titles_keys.sort((a, b) => b - a)){
               recent_titles[i] = await getTitleInfo(Number(recent_titles_keys[i]), "animevost");
               this.titles.animevost.push(recent_titles[i].data[0]);
             }
             recent_titles_keys = await getAllKeys('recent_titles', "anilibria");
             recent_titles = [];
-            for(let i in recent_titles_keys.sort((a, b) => b - a)){
+            for(const i in recent_titles_keys.sort((a, b) => b - a)){
               recent_titles[i] = await getTitleInfo(Number(recent_titles_keys[i]), "anilibria");
               this.titles.anilibria.push(recent_titles[i].data[0]);
             }

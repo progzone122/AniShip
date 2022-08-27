@@ -20,7 +20,8 @@
       <div style="display: flex; flex-wrap: wrap; gap: 0.5em;">
         <button type="button" class="btn btn-dark" @click="clearDatabase();">Очистить базу данных</button>
         <button type="button" class="btn btn-dark" @click="importDatabase();">Импорт базы данных</button>
-        <button type="button" class="btn btn-dark" @click="exportDatabase();">Экспорт базы данных</button>        
+        <button type="button" class="btn btn-dark" @click="exportDatabase();">Экспорт базы данных</button>
+        <label class="btn btn-dark">Импорт базы данных<input @change="importDatabase();" type="file" id="importDirectory1" webkitfile style="display: none;"></label>
       </div>
       <!-- -->
 
@@ -88,7 +89,7 @@ export default {
         alert("База данных успешно очищена");
       },
       importDatabase(){
-        alert(importDatabase());
+        alert(importDatabase(document.getElementById('importDirectory1').files[0].path, "utf8"));
       },
       async exportDatabase(){
         alert(await exportDatabase());

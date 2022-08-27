@@ -246,7 +246,7 @@ export default {
     this.genres = this.info.genre;
     this.year = this.info.year;
     //Add title to recent
-    let recent_title = await getOneEntry('recent_titles', this.main_params.voicer, String(this.main_params.id));
+    const recent_title = await getOneEntry('recent_titles', this.main_params.voicer, String(this.main_params.id));
     if(recent_title === null){
       setEntry('recent_titles', this.main_params.voicer, String(this.main_params.id), {});
     }

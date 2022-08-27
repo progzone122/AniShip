@@ -82,7 +82,7 @@ export default {
     titles = titles.data;
     const recent_titles_keys = await getAllKeys('recent_titles', getDefaultVoicer());
     const recent_titles = [];
-    for(let i in recent_titles_keys.sort((a, b) => b - a)){
+    for(const i in recent_titles_keys.sort((a, b) => b - a)){
       recent_titles[i] = await getTitleInfo(Number(recent_titles_keys[i]), getDefaultVoicer());
       recent_titles[i] = recent_titles[i].data[0];
     }

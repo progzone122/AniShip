@@ -1,8 +1,8 @@
 import getAppDataPath from 'appdata-path'
 import { getAllKeys, getOneEntry, setEntry } from './indexedDB.js'
-const ncp = require("copy-paste");
+const fs = require("fs");
 export const getAppData = () => {
-    return getAppDataPath().replaceAll('\\', '/') + '/AniShip';
+    return getAppDataPath().replaceAll('\\', '/') + '/';
 }
 export const getAnimeVostServer = () => {
     const servers = localStorage.getItem('animevost_server');
@@ -22,8 +22,8 @@ export const getDefaultVoicer = () => {
         return "animevost";
     }
 }
-export const importDatabase = () => {
-    const database = JSON.parse(ncp.paste());
+export const importDatabase = (data) => {
+    const database = JSON.parse(fs.readFileSync(data));
     console.log(database);
     for(const i in database.favorites.animevost){
         setEntry('favorites', 'animevost', String(i), database.favorites.animevost[i]);
@@ -50,6 +50,7 @@ export const exportDatabase = async () => {
     for(const i in anilibria_keys){
         database.favorites.anilibria[String(anilibria_keys[i])] = await getOneEntry('favorites', 'anilibria', String(anilibria_keys[i]));
     }
-    ncp.copy(JSON.stringify(database));
-    return "Бэкап успешно скопирован в буфер обмена";
+    console.log(database);
+    fs.writeFileSync(getAppData() + "aniship_backup.json", JSON.stringify(database))
+    return "Бэкап успешно сохранён в директорию '"  + getAppData() + "aniship_backup.json" + "'";
 }
