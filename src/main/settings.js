@@ -22,7 +22,7 @@ export const getDefaultVoicer = () => {
         return "animevost";
     }
 }
-export const importDatabase = (data) => {
+export const importDatabase = data => {
     const database = JSON.parse(fs.readFileSync(data));
     console.log(database);
     for(const i in database.favorites.animevost){
@@ -52,5 +52,5 @@ export const exportDatabase = async () => {
     }
     console.log(database);
     fs.writeFileSync(getAppData() + "aniship_backup.json", JSON.stringify(database))
-    return "Бэкап успешно сохранён в директорию '"  + getAppData() + "aniship_backup.json" + "'";
+    return "Бэкап успешно сохранён в директорию '" + getAppData() + "aniship_backup.json" + "'";
 }
