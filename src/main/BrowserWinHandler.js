@@ -33,6 +33,7 @@ export default class BrowserWinHandler {
     // dock icon is clicked and there are no other windows open.
     if (!this.allowRecreate) return
     app.on('activate', () => this._recreate())
+    app.commandLine.appendSwitch('ignore-certificate-errors', true);
   }
 
   _create () {
@@ -41,11 +42,10 @@ export default class BrowserWinHandler {
         ...this.options,
         webPreferences: {
           ...this.options.webPreferences,
-          webSecurity: false, // disable on dev to allow loading local resources
+          webSecurity: isProduction, // disable on dev to allow loading local resources
           nodeIntegration: true, // allow loading modules via the require () function
           contextIsolation: false, // https://github.com/electron/electron/issues/18037#issuecomment-806320028
-          enableRemoteModule: true,
-          enableremotemodule: true
+          allowRunningInsecureContent: true
         }
       }
     )
@@ -78,7 +78,7 @@ export default class BrowserWinHandler {
 
   async loadPage(pagePath) {
     if (!this.browserWindow) return Promise.reject(new Error('The page could not be loaded before win \'created\' event'))
-    const serverUrl = isDev ? DEV_SERVER_URL : 'app://./index.html'
+    const serverUrl = isDev ? DEV_SERVER_URL : 'aniship://./index.html'
     const fullPath = serverUrl + '#' + pagePath;
     await this.browserWindow.loadURL(fullPath)
   }

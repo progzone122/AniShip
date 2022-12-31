@@ -1,13 +1,14 @@
 import BrowserWinHandler from './BrowserWinHandler'
-import './rpc.js'
+
 const winHandler = new BrowserWinHandler({
-  minWidth: 1152,
-  minHeight: 864,
-  autoHideMenuBar: true
+  height: 600,
+  width: 1000
 })
 
 winHandler.onCreated(_browserWindow => {
   winHandler.loadPage('/')
+  // Or load custom url
+  // _browserWindow.loadURL('https://google.com')
 })
 
 export default winHandler

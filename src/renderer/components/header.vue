@@ -1,62 +1,84 @@
 <template>
-  <header class="main-header">
-    <nav>
-      <div>
-        <nuxt-link
-          to="/"
-          exact
+  <div>
+    <v-app-bar
+      elevation="0"
+      class="bar"
+      dark
+      fixed
+    >
+      <div class="left">
+        <v-btn
+          elevation="0"
+          fab
+          class="fab-button"
+          @click="$router.go(-1)"
         >
-          System info
-        </nuxt-link>
-      </div>
-      <div>
-        <nuxt-link
-          to="/other"
-          exact
+          <v-icon>
+            mdi-arrow-left
+          </v-icon>
+        </v-btn>
+        <!-- <v-btn
+          elevation="0"
+          fab
+          class="fab-button"
+          @click="$router.go(1)"
         >
-          Next page
-        </nuxt-link>
+          <v-icon>
+            mdi-arrow-right
+          </v-icon>
+        </v-btn> -->
       </div>
-    </nav>
-  </header>
+      <div v-if="$route.name !== 'watch'" class="search-block">
+        <div style="width: 60%;">
+          <SearchBlock />
+          <!-- <v-text-field
+              placeholder="Поиск аниме..."
+              filled
+              rounded
+              dense
+              class="search-input"
+            /> -->
+        </div>
+      </div>
+    </v-app-bar>
+  </div>
 </template>
-
 <script>
 export default {
-  name: 'HeaderComponent'
+  name: 'Header'
 }
 </script>
-
-<style scoped>
-    .main-header {
-        height: 50px;
-        display: flex;
-        background-color: #364758;
+<style lang="scss">
+@import "~/assets/variables.scss";
+  .bar{
+    background-color: $color3 !important;
+    display: flex;
+    gap: 1em;
+    .left{
+      height: 100%;
+      display: flex;
+      align-items: center;
+      gap: 1em;
+      // background-color: red;
+      .fab-button{
+        background-color: $color2;
+        width: 3em !important;
+        height: 3em !important;
+        i{
+          font-size: 1.5em;
+        }
+      }
     }
-
-    nav{
-        width: 100%;
-        display: flex;
-        justify-content: center;
+    .search-block{
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      width: 67vw;
+      height: 100%;
+      // background-color: green;
+      .search-input{
+        height: 2.5em;
+      }
     }
-
-    nav div{
-        height: 100%;
-        margin: 0 20px;
-        display: flex;
-        align-items: center;
-    }
-
-    a {
-        font-family: Helvetica, sans-serif;
-        color: white;
-        font-size: 1rem;
-        font-weight: 100;
-        text-decoration: underline;
-        text-transform: uppercase;
-    }
-
-    a:hover{
-        opacity: 0.9;
-    }
+  }
 </style>

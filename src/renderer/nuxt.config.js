@@ -8,23 +8,43 @@ module.exports = {
   ssr: false,
   target: 'static',
   head: {
-    title: 'AniShip',
+    title: 'aniship-night',
     meta: [{ charset: 'utf-8' }]
   },
-  css: [
-    "~assets/css/videojs.css",
-    '~assets/css/global.scss'
-  ],
   loading: false,
   plugins: [
-    { src: '~/plugins/vue-infinite-loading', ssr: false }
+    { src: '@/plugins/icons.js', ssr: true },
+    { src: '@/plugins/infiniteloading', ssr: false },
+    { src: '@/plugins/nuxt-plyr', ssr: false }
   ],
+  css: [
+    'plyr/dist/plyr.css',
+    '@/assets/css/overwrite.css',
+    '@/assets/css/global.css'
+  ],
+  components: true,
   buildModules: [
+
   ],
+  // axios: {
+  //   // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
+  //   baseURL: 'http://localhost:3033/',
+  //   ssr: false
+  // },
   modules: [
-    'bootstrap-vue/nuxt',
+    '@nuxtjs/vuetify',
+    '@nuxtjs/axios'
   ],
-  bootstrapVue: {
-    icons: true
+  vuetify: {
+    theme: {
+      themes: {
+        light: {
+          primary: '#1867c0',
+          secondary: '#b0bec5',
+          accent: '#8c9eff',
+          error: '#b71c1c'
+        }
+      }
+    }
   }
 }

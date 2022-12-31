@@ -3,7 +3,7 @@ import { app, protocol } from 'electron'
 import * as path from 'path'
 import { URL } from 'url'
 
-const PRODUCTION_APP_PROTOCOL = 'app'
+const PRODUCTION_APP_PROTOCOL = 'aniship'
 const PRODUCTION_APP_PATH = path.join(__dirname, '..', 'renderer')
 
 

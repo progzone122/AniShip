@@ -1,260 +1,158 @@
 <template>
-  <div class="content">
-    <header>
-      <button type="button" :class="'btn btn-dark ' + watchButton" @click="list('watch')">
-        Смотрю
-      </button>
-      <button
-        type="button"
-        :class="'btn btn-dark ' + willWatchButton"
-        @click="list('will')"
-      >
-        Буду смотреть
-      </button>
-      <button
-        type="button"
-        :class="'btn btn-dark ' + watchedButton"
-        @click="list('watched')"
-      >
-        Просмотрено
-      </button>
-      <button
-        type="button"
-        :class="'btn btn-dark ' + abandonedWatchButton"
-        @click="list('abandoned')"
-      >
-        Брошено
-      </button>
-      <button
-        type="button"
-        :class="'btn btn-dark ' + recentWatchButton"
-        @click="list('recent_titles')"
-      >
-        <b-icon icon="clock" />
-      </button>
-    </header>
-    <div class="container">
-      <div v-if="titles.animevost.length !== 0">
-        <h4 style="color: white">Animevost</h4>
-        <hr style="width: 90vw; color: white">
-        <div class="container2">
-          <div v-for="i in titles.animevost" v-if="titles" :key="i.id" class="block">
-            <nuxt-link
-              :to="{ name: 'WatchAnime', query: { id: i.id, voicer: 'animevost' } }"
-            >
-              <TitleBlock :title="i" voicer="animevost" />
-            </nuxt-link>
+  <v-container class="c">
+    <div v-if="account === null || account === undefined" class="auth-failed-error">
+      <img src="~/assets/favicon-shikimori.png" alt="" srcset="">
+      <h3>Для этого действия требуется авторизация в Shikimori</h3>
+      <p>Авторизируйтесь для того, чтобы пользоваться полным функционалом приложения</p>
+    </div>
+    <div v-else style="width: 100%; display: flex; flex-direction: column; align-items: center;">
+      <div>
+        <v-chip-group dark mandatory class="filters-group">
+          <div v-for="tag in tags">
+            <v-chip :key="tag.value" @click="getAnimesByActiveTag(tag.value)">
+              <h4>
+                {{ tag.name }}
+              </h4>
+            </v-chip>
           </div>
-        </div>
-      </div>
-      <div v-if="titles.anilibria.length !== 0">
-        <h4 style="color: white; margin-top: 1em">Anilibria</h4>
-        <hr style="width: 90vw; color: white">
-        <div class="container2">
-          <div v-for="i in titles.anilibria" v-if="titles" :key="i.id" class="block">
-            <nuxt-link
-              :to="{ name: 'WatchAnime', query: { id: i.id, voicer: 'anilibria' } }"
-            >
-              <TitleBlock :title="i" voicer="anilibria" />
-            </nuxt-link>
+        </v-chip-group>
+        <div class="animes">
+          <div v-for="anime in animes" :key="anime" @click="$router.push({ name: 'watch', query: { id: anime.anime.id } })">
+            <CardAnimeBlock :params="anime.anime" />
           </div>
+          <infinite-loading v-if="animes.length" spinner="spiral" @infinite="infiniteScroll" />
         </div>
       </div>
     </div>
-  </div>
+  </v-container>
 </template>
 <script>
-import { setEntry, getOneEntry, getAllKeys, removeEntry } from '../../main/indexedDB.js'
-import { getTitleInfo } from "../../main/api/api.js";
-import TitleBlock from '../components/TitleBlock.vue';
+import { mapGetters, mapActions } from 'vuex'
+
+const ShikimoriAPI = require('~/assets/shikimori/index')
+const shiki = new ShikimoriAPI()
+
 export default {
-  name: "Favorites",
-  components: {
-    TitleBlock
+  name: 'Favorites',
+  computed: {
+    ...mapActions('index/fetchProfile'),
+    ...mapGetters([
+      'account'
+    ])
   },
-  asyncData() {
+  data () {
     return {
-      database: {},
-      watchButton: "active",
-      willWatchButton: "",
-      watchedButton: "",
-      abandonedWatchButton: "",
-      recentWatchButton: "",
-      titles: {
-        animevost: [],
-        anilibria: [],
-      },
-    };
-  },
-  async created(){
-    this.animevost_keys = await getAllKeys('favorites', 'animevost');
-    this.anilibria_keys = await getAllKeys('favorites', 'anilibria');
-    for(const i in this.animevost_keys){
-      const title = await getOneEntry('favorites', 'animevost', this.animevost_keys[i]);
-      if (title.list === "watch") {
-        this.titles.animevost.push(getTitleInfo(Number(this.animevost_keys[i]), "animevost").data[0]);
-      }
+      animes: [],
+      page: 1,
+      active_tag: 'watching',
+      tags: [
+        {
+          name: 'Смотрю',
+          value: 'watching'
+        },
+        {
+          name: 'Запланировано',
+          value: 'planned'
+        },
+        {
+          name: 'Пересматриваю',
+          value: 'rewatching'
+        },
+        {
+          name: 'Просмотрено',
+          value: 'completed'
+        },
+        {
+          name: 'Отложено',
+          value: 'on_hold'
+        },
+        {
+          name: 'Брошено',
+          value: 'dropped'
+        }
+      ]
     }
-    for(const i in this.anilibria_keys){
-      const title = await getOneEntry('favorites', 'anilibria', this.anilibria_keys[i]);
-      if (title.list === "watch") {
-        this.titles.anilibria.push(getTitleInfo(Number(this.anilibria_keys[i]), "anilibria").data[0]);
-      }
+  },
+  async created () {
+    if (this.account !== null && this.account !== undefined) {
+      shiki.credentials.access_token = localStorage.getItem('access_token')
+      shiki.credentials.refresh_token = localStorage.getItem('refresh_token')
+      this.getAnimesByActiveTag(this.active_tag)
     }
   },
   methods: {
-    async list(obj) {
-      switch (obj) {
-        case "watch":
-          this.titles = {
-            animevost: [],
-            anilibria: [],
-          };
-            for(const i in this.animevost_keys){
-              const title = await getOneEntry('favorites', 'animevost', this.animevost_keys[i]);
-              if (title.list === "watch") {
-                  this.titles.animevost.push(getTitleInfo(Number(this.animevost_keys[i]), "animevost").data[0]);
-              }
-            }
-            for(const i in this.anilibria_keys){
-              const title = await getOneEntry('favorites', 'anilibria', this.anilibria_keys[i]);
-              if (title.list === "watch") {
-                  this.titles.anilibria.push(getTitleInfo(Number(this.anilibria_keys[i]), "anilibria").data[0]);
-              }
-            }
-          this.watchButton = "active";
-          this.willWatchButton = "";
-          this.watchedButton = "";
-          this.abandonedWatchButton = "";
-          this.recentWatchButton = "";
-          break;
-        case "will":
-          this.titles = {
-            animevost: [],
-            anilibria: [],
-          };
-            for(const i in this.animevost_keys){
-              const title = await getOneEntry('favorites', 'animevost', this.animevost_keys[i]);
-              if (title.list === "will") {
-                  this.titles.animevost.push(getTitleInfo(Number(this.animevost_keys[i]), "animevost").data[0]);
-              }
-            }
-            for(const i in this.anilibria_keys){
-              const title = await getOneEntry('favorites', 'anilibria', this.anilibria_keys[i]);
-              if (title.list === "will") {
-                  this.titles.anilibria.push(getTitleInfo(Number(this.anilibria_keys[i]), "anilibria").data[0]);
-              }
-            }
-          this.watchButton = "";
-          this.willWatchButton = "active";
-          this.watchedButton = "";
-          this.abandonedWatchButton = "";
-          this.recentWatchButton = "";
-          break;
-        case "watched":
-          this.titles = {
-            animevost: [],
-            anilibria: [],
-          };
-            for(const i in this.animevost_keys){
-              const title = await getOneEntry('favorites', 'animevost', this.animevost_keys[i]);
-              if (title.list === "watched") {
-                  this.titles.animevost.push(getTitleInfo(Number(this.animevost_keys[i]), "animevost").data[0]);
-              }
-            }
-            for(const i in this.anilibria_keys){
-              const title = await getOneEntry('favorites', 'anilibria', this.anilibria_keys[i]);
-              if (title.list === "watched") {
-                  this.titles.anilibria.push(getTitleInfo(Number(this.anilibria_keys[i]), "anilibria").data[0]);
-              }
-            }
-          this.watchButton = "";
-          this.willWatchButton = "";
-          this.watchedButton = "active";
-          this.abandonedWatchButton = "";
-          this.recentWatchButton = "";
-          break;
-        case "abandoned":
-          this.titles = {
-            animevost: [],
-            anilibria: [],
-          };
-            for(const i in this.animevost_keys){
-              const title = await getOneEntry('favorites', 'animevost', this.animevost_keys[i]);
-              if (title.list === "abandoned") {
-                  this.titles.animevost.push(getTitleInfo(Number(this.animevost_keys[i]), "animevost").data[0]);
-              }
-            }
-            for(const i in this.anilibria_keys){
-              const title = await getOneEntry('favorites', 'anilibria', this.anilibria_keys[i]);
-              if (title.list === "abandoned") {
-                  this.titles.anilibria.push(getTitleInfo(Number(this.anilibria_keys[i]), "anilibria").data[0]);
-              }
-            }
-          this.watchButton = "";
-          this.willWatchButton = "";
-          this.watchedButton = "";
-          this.abandonedWatchButton = "active";
-          this.recentWatchButton = "";
-          break;
-        case "recent_titles":
-          this.titles = {
-            animevost: [],
-            anilibria: [],
-          };
-            let recent_titles_keys = await getAllKeys('recent_titles', "animevost");
-            let recent_titles = [];
-            for(const i in recent_titles_keys.sort((a, b) => b - a)){
-              recent_titles[i] = await getTitleInfo(Number(recent_titles_keys[i]), "animevost");
-              this.titles.animevost.push(recent_titles[i].data[0]);
-            }
-            recent_titles_keys = await getAllKeys('recent_titles', "anilibria");
-            recent_titles = [];
-            for(const i in recent_titles_keys.sort((a, b) => b - a)){
-              recent_titles[i] = await getTitleInfo(Number(recent_titles_keys[i]), "anilibria");
-              this.titles.anilibria.push(recent_titles[i].data[0]);
-            }
-            this.watchButton = "";
-            this.willWatchButton = "";
-            this.watchedButton = "";
-            this.abandonedWatchButton = "";
-            this.recentWatchButton = "active";
-          break;
+    async getAnimesByActiveTag (tag) {
+      this.page = 1
+      this.active_tag = tag
+      this.animes = []
+      this.animes = await shiki.user_rates.anime_list(this.account.id, {
+        status: tag,
+        page: 1,
+        limit: 12
+      })
+    },
+    infiniteScroll ($state) {
+      this.page++
+      setTimeout(() => {
+        shiki.user_rates.anime_list(this.account.id, {
+          status: this.active_tag,
+          page: this.page,
+          limit: 12
+        }).then(res => {
+          delete res[0]
+          console.log(res)
+          if (res.length > 1) {
+            res.forEach(element => {
+              this.animes.push(element)
+            })
+            $state.loaded()
+          } else {
+            $state.complete()
+          }
+        })
+      }, 1500)
+    },
+    get_data: item => {
+      if (item === undefined) {
+        return null
       }
+      return localStorage.getItem(item)
+    },
+    set_data: (key, value) => {
+      localStorage.setItem(key, value)
     }
   }
-};
+}
 </script>
 <style scoped lang="scss">
-@import "../assets/css/theme.scss";
-.content {
-  width: 100vw;
-  padding-left: 2vw;
-  .container {
-    position: absolute;
-    left: 7vw;
-    padding-bottom: 10em;
+@import "~/assets/variables.scss";
+
+.filters-group {
+  .v-chip {
+    background-color: $color4 !important;
+    margin: 0.5em;
+
+    h4 {
+      margin-top: 0.2em;
+      font-size: 16px;
+      padding: 0.3em;
+      padding-bottom: 0.4em;
+    }
   }
 }
-header {
+
+.auth-failed-error {
   width: 100%;
-  height: 6em;
+  height: 75vh;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding-right: 2em;
-  .btn-dark {
-    margin-right: 1em;
-    border: none;
+
+  img {
+    width: 6em;
+    height: 6em;
+    margin-bottom: 1em;
   }
-}
-a {
-  text-decoration: none;
-}
-.container2 {
-  width: 100%;
-  display: grid;
-  gap: $indexTitles_gap;
-  grid-template-columns: repeat($indexTitles_columns, 1fr);
 }
 </style>
