@@ -12,7 +12,7 @@
     "postinstall": "electron-builder install-app-deps & yarn lint:fix"
   },
   "keywords": [],
-  "author": "progzone122@gmail.com",
+  "author": "DiabloSat <progzone122@gmail.com>",
   "license": "MIT",
   "homepage": "https://github.com/michalzaq12/electron-nuxt/blob/master/README.md",
   "engines": {
