@@ -30,7 +30,7 @@ const baseExtend = (config, { isClient }) => {
   })]
 
   config.target = 'electron-renderer'
-  
+
   config.node = {
     __dirname: !isProduction,
     __filename: !isProduction
@@ -55,14 +55,14 @@ const baseExtend = (config, { isClient }) => {
 
 const mergeConfig = customConfig => {
   const hasExtendFunction = (customConfig.build !== undefined && customConfig.build.extend !== undefined);
-  if(hasExtendFunction){
+  if (hasExtendFunction) {
     const userExtend = customConfig.build.extend;
-    customConfig.build.extend = function() {
+    customConfig.build.extend = function () {
       baseExtend(...arguments) // eslint-disable-line prefer-rest-params
       userExtend(...arguments) // eslint-disable-line prefer-rest-params
     }
   } else {
-    if(baseConfig.build === undefined) baseConfig.build = {};
+    if (baseConfig.build === undefined) baseConfig.build = {};
     baseConfig.build.extend = baseExtend;
   }
 

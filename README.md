@@ -1,5 +1,4 @@
-
-# aniship
+# aniship-night
 
 > An electron-nuxt project
 

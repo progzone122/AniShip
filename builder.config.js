@@ -3,7 +3,7 @@ const ICONS_DIR = 'build/icons/'
 const windowsOS = {
   win: {
     icon: ICONS_DIR + 'win-icon.ico',
-    publisherName: 'michal',
+    publisherName: 'diablosat',
     target: 'nsis'
   },
 
@@ -42,8 +42,8 @@ const macOS = {
 }
 
 module.exports = {
-  productName: 'aniship',
-  appId: 'com.aniship',
+  productName: 'aniship-night',
+  appId: 'com.progzone122.aniship-night',
   artifactName: 'setup-${version}.${ext}',
   directories: {
     output: 'build'
