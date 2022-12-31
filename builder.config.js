@@ -14,8 +14,8 @@ const windowsOS = {
 
 const linuxOS = {
   linux: {
-    icon: ICONS_DIR,
-    target: 'deb'
+    icon: ICONS_DIR + 'logo.png',
+    target: 'AppImage'
   }
 }
 
