@@ -45,7 +45,6 @@ export default {
       order: 'popularity',
       limit: 12
     })
-    // console.log(await $axios.$get('https://localhost:3033/shikimori/add?user_id=1017013&target_id=5114'));
     return {
       animes_list: [
         {
@@ -97,13 +96,6 @@ export default {
 
 i {
   color: white !important;
-}
-
-.animes {
-  margin-top: 1em;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
 }
 </style>
 <style scoped lang="scss">

@@ -7,17 +7,20 @@
     </div>
     <div v-else style="width: 100%; display: flex; flex-direction: column; align-items: center;">
       <div>
-        <v-chip-group dark mandatory class="filters-group">
-          <div v-for="tag in tags">
-            <v-chip :key="tag.value" @click="getAnimesByActiveTag(tag.value)">
-              <h4>
-                {{ tag.name }}
-              </h4>
-            </v-chip>
-          </div>
-        </v-chip-group>
+        <div style="width: 100%; display: flex; justify-content: center; ">
+          <v-chip-group dark mandatory class="filters-group">
+            <div v-for="tag in tags">
+              <v-chip :key="tag.value" @click="getAnimesByActiveTag(tag.value)">
+                <h4>
+                  {{ tag.name }}
+                </h4>
+              </v-chip>
+            </div>
+          </v-chip-group>
+        </div>
         <div class="animes">
-          <div v-for="anime in animes" :key="anime" @click="$router.push({ name: 'watch', query: { id: anime.anime.id } })">
+          <div v-for="anime in animes" :key="anime"
+            @click="$router.push({ name: 'watch', query: { id: anime.anime.id } })">
             <CardAnimeBlock :params="anime.anime" />
           </div>
           <infinite-loading v-if="animes.length" spinner="spiral" @infinite="infiniteScroll" />
@@ -40,7 +43,7 @@ export default {
       'account'
     ])
   },
-  data () {
+  data() {
     return {
       animes: [],
       page: 1,
@@ -73,7 +76,7 @@ export default {
       ]
     }
   },
-  async created () {
+  async created() {
     if (this.account !== null && this.account !== undefined) {
       shiki.credentials.access_token = localStorage.getItem('access_token')
       shiki.credentials.refresh_token = localStorage.getItem('refresh_token')
@@ -81,7 +84,7 @@ export default {
     }
   },
   methods: {
-    async getAnimesByActiveTag (tag) {
+    async getAnimesByActiveTag(tag) {
       this.page = 1
       this.active_tag = tag
       this.animes = []
@@ -91,7 +94,7 @@ export default {
         limit: 12
       })
     },
-    infiniteScroll ($state) {
+    infiniteScroll($state) {
       this.page++
       setTimeout(() => {
         shiki.user_rates.anime_list(this.account.id, {

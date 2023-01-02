@@ -14,10 +14,12 @@ class APIrequest {
         'user-agent': `User-Agent: ${this.shikimori.credentials.useragent}`,
         Authorization: `Bearer ${this.shikimori.credentials.access_token ?? ''}`
       },
-      delay: 1000,
+      delay: 1000
     }).then(res => {
       return res.data
-    })
+    }).catch(res => {
+      console.log(res);
+    });
   }
 
   // method: string, data: object

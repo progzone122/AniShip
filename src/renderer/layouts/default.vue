@@ -22,7 +22,7 @@ export default {
   components: {
     Header
   },
-  data () {
+  data() {
     return {
     }
   }
@@ -30,33 +30,52 @@ export default {
 </script>
 <style lang="scss">
 @import "~/assets/variables.scss";
-  html{
-    overflow: hidden;
-  }
-  .app{
-    background-color: $bg !important;
-    height: 100vh;
-    overflow-y: scroll;
-    overflow-x: hidden;
-  }
-  .c{
-    margin-left: 2em !important;
-    margin-top: 5em;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  ::-webkit-scrollbar-track {
-    background-color: transparent;
-  }
-  ::-webkit-scrollbar {
-    background-color: $color4;
-  }
-  ::-webkit-scrollbar-thumb {
-      background: $color2;
-      border-radius: 1em;
-  }
-  h1, h2, h3, h4, p{
-    color: white;
-  }
+
+html {
+  overflow: hidden;
+}
+
+.app {
+  background-color: $bg !important;
+  height: 100vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.c {
+  margin-left: 2em !important;
+  margin-top: 5em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+::-webkit-scrollbar {
+  background-color: $color4;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $color2;
+  border-radius: 1em;
+}
+
+h1,
+h2,
+h3,
+h4,
+p {
+  color: white;
+}
+
+/* */
+.animes {
+  margin-top: 1em;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
 </style>

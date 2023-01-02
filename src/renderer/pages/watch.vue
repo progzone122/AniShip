@@ -7,25 +7,29 @@
       <div class="anime-info rounded-lg">
         <div style="display: flex; gap: 1em;">
           <div style="width: 13em; height: 100%;">
-            <v-img :lazy-src="'https://shikimori.one' + anime_info.image.preview"
-              :src="'https://shikimori.one' + anime_info.image.original" class="rounded-lg" />
+            <v-img
+              :lazy-src="'https://shikimori.one' + anime_info.image.preview"
+              :src="'https://shikimori.one' + anime_info.image.original" class="rounded-lg"
+            />
             <div style="width: 100%; display: flex; justify-content: center;">
               <v-rating :value="anime_info.score" length="10" color="amber" dense half-increments readonly size="12" />
             </div>
             <SetAnimeLists v-if="account" :anime="anime_info" />
           </div>
           <!-- -->
-          <div style="display: flex; flex-direction: column; gap: 1em;">
+          <div style="width: 100%; display: flex; flex-direction: column; gap: 1em;">
             <h2>{{ anime_info.name }}</h2>
             <h4>Статус: {{ getShikiStatus(anime_info.status) }}</h4>
             <div style="color: white;" v-html="anime_info.description_html" />
-            <div v-if="shikimori_franchise.nodes.length !== 0">
+            <div style="width: 100%;" v-if="shikimori_franchise.nodes.length !== 0">
               <h4>Франшиза:</h4>
               <WatchFranchiseAnime :params="shikimori_franchise" />
             </div>
             <div style="display: flex; flex-wrap: wrap; gap: 0.5em; width: 100%;">
-              <v-chip v-for="genre in anime_info.genres" :key="genre.id" dark class="bl genre-chip"
-                style="padding: 1.5em !important;">
+              <v-chip
+                v-for="genre in anime_info.genres" :key="genre.id" dark class="bl genre-chip"
+                style="padding: 1.5em !important;"
+              >
                 {{ genre.russian }}
               </v-chip>
             </div>
@@ -50,6 +54,7 @@
           </v-list>
         </div>
       </div>
+      <WatchSimilarAnimes :id="anime_info.id" />
     </v-container>
   </div>
 </template>
@@ -66,8 +71,16 @@ export default {
     KodikPlayer: () => import('~/components/players/KodikPlayer.vue'),
     AnilibriaPlayer: () => import('~/components/players/AnilibriaPlayer.vue')
   },
+  async beforeRouteUpdate (to, from, next) {
+    console.log(to)
+    this.anime_info = await shiki.animes.get(to.query.id)
+    this.shikimori_franchise = await shiki.animes.getFranchise(to.query.id)
+    this.anime_sources = []
+    this.addSources()
+    next()
+  },
   layout: 'default',
-  async asyncData({ $store, query }) {
+  async asyncData ({ $store, query }) {
     console.log(await shiki.animes.get(query.id))
     const shikimori = await shiki.animes.get(query.id)
     const shikimori_franchise = await shiki.animes.getFranchise(query.id)
@@ -76,7 +89,7 @@ export default {
       shikimori_franchise
     }
   },
-  data() {
+  data () {
     return {
       image: {},
       anime_sources: [],
@@ -84,15 +97,7 @@ export default {
       kodik_player: null
     }
   },
-  async beforeRouteUpdate(to, from, next) {
-    console.log(to)
-    this.anime_info = await shiki.animes.get(to.query.id)
-    this.shikimori_franchise = await shiki.animes.getFranchise(to.query.id)
-    this.anime_sources = [];
-    this.addSources()
-    next()
-  },
-  created() {
+  created () {
     this.addSources()
   },
   computed: {
@@ -102,19 +107,19 @@ export default {
 
   },
   methods: {
-    getShikiStatus(status) {
+    getShikiStatus (status) {
       switch (status) {
-        case 'released':
-          return 'вышло'
-        case 'ongoing':
-          return 'онгоинг'
-        case 'anons':
-          return 'анонс'
-        default:
-          return 'ошибка загрузки'
+      case 'released':
+        return 'вышло'
+      case 'ongoing':
+        return 'онгоинг'
+      case 'anons':
+        return 'анонс'
+      default:
+        return 'ошибка загрузки'
       }
     },
-    addSources() {
+    addSources () {
       this.$axios.get(`https://kodikapi.com/search?shikimori_id=${this.$route.query.id}&limit=1&token=b7cc4293ed475c4ad1fd599d114f4435`).then(result => {
         console.log(result)
         if (result !== undefined && result !== null && result.data.results.length !== 0) {

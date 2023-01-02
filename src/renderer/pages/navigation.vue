@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid style="padding: 0 !important; position: absolute; left: 10vw; top: 6em; width: 80%;">
+  <v-container fluid style="padding: 0 !important; position: absolute; left: 10vw; width: 80%;">
     <div class="main">
       <div class="left">
         <v-chip-group v-model="genres_active" column multiple dark class="filters-group">

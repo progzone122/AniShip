@@ -30,12 +30,12 @@ export default {
     })
   },
   methods: {
-    select(id){
-      this.$router.push({ name: "watch", query: { id }});
+    select (id) {
+      this.$router.push({ name: 'watch', query: { id } })
       // alert(id);
       // this.$route.query.id = id;
     }
-  },
+  }
 }
 </script>
 <style scoped lang="scss">
@@ -45,5 +45,7 @@ export default {
     background-color: $color1 !important;
     padding: 0;
     margin-top: 0.5em;
+    max-height: 25em;
+    overflow-y: auto;
 }
 </style>

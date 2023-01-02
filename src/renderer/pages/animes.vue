@@ -86,11 +86,4 @@ export default {
 i {
   color: white !important;
 }
-
-.animes {
-  margin-top: 1em;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
 </style>
