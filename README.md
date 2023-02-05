@@ -1,6 +1,6 @@
-# aniship-night
+# AniShip
 
-> An electron-nuxt project
+> Собирать на версии Node.js 16.x!
 
 #### Build Setup
 
