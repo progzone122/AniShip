@@ -18,8 +18,8 @@ class APIrequest {
     }).then(res => {
       return res.data
     }).catch(res => {
-      console.log(res);
-    });
+      console.log(res)
+    })
   }
 
   // method: string, data: object

@@ -2,7 +2,7 @@
   <div style="display: flex; align-items: center; gap: 0.3em;">
     <v-select
       v-model="e7" dark :items="items" label="Добавить в список" hide-details solo class="s rounded-lg" dense
-      flat
+      flat color="background"
     >
       <template #no-data>
         <div />
@@ -109,7 +109,6 @@ export default {
 @import "~/assets/variables.scss";
 
 .theme--dark.s {
-  background-color: $color1;
   margin-top: 0.5em !important;
 
   input {
@@ -119,7 +118,6 @@ export default {
   .v-input__control {
     .v-input__slot {
       height: 2em !important;
-      background: $color1 !important;
       color: white !important;
     }
   }

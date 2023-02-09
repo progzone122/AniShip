@@ -44,6 +44,7 @@ const webpackConfig = Webpack.getBaseConfig({
   plugins: [
     new webpack.DefinePlugin({
       'process.resourcesPath': resourcesPath.mainProcess(),
+      'process.sources': path.join(resourcesPath.mainProcess(), 'sources'),
       'process.env.DEV_SERVER_URL': `'${SERVER_HOST}:${SERVER_PORT}'`
     })
   ]

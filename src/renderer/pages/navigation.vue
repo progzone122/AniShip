@@ -1,10 +1,9 @@
 <template>
-  <v-container fluid style="padding: 0 !important; position: absolute; left: 10vw; width: 80%;">
     <div class="main">
       <div class="left">
-        <v-chip-group v-model="genres_active" column multiple dark class="filters-group">
+        <v-chip-group v-model="genres_active" column multiple class="filters-group">
           <div v-for="genre in genres" :key="genre.id">
-            <v-chip :value="genre.id" filter>
+            <v-chip color="primary" :value="genre.id" filter>
               <h4>{{ genre.russian }}</h4>
             </v-chip>
           </div>
@@ -22,7 +21,6 @@
         </div>
       </div>
     </div>
-  </v-container>
 </template>
 
 <script>
@@ -112,13 +110,12 @@ export default {
 .main {
   display: flex;
   gap: 1em;
-
+  min-height: 100vh;
   .left {
     width: 30%;
 
     .filters-group {
       .v-chip {
-        background-color: $color3 !important;
         margin: 0.5em;
 
         h4 {

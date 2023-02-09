@@ -1,4 +1,4 @@
-import { app } from 'electron'
+const { app } = require('electron')
 
 // Quit when all windows are closed.
 app.on('window-all-closed', function () {

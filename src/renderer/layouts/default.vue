@@ -1,28 +1,28 @@
 <template>
-  <v-app class="app">
-    <Header />
-    <v-main>
-      <LeftMenu />
-      <v-container>
-        <Nuxt />
-      </v-container>
-    </v-main>
-    <!-- <v-footer
+  <v-app dark class="app" :style="{background: $vuetify.theme.themes.dark.background}">
+    <v-container fluid>
+      <Header />
+      <v-main class="pl-15 mt-16">
+        <LeftMenu />
+        <v-container fluid>
+          <Nuxt />
+        </v-container>
+      </v-main>
+      <!-- <v-footer
       app
     >
       <span>&copy; {{ new Date().getFullYear() }}</span>
     </v-footer> -->
+    </v-container>
   </v-app>
 </template>
 
 <script>
-import Header from '@/components/Header'
+require('~/assets/checkpaths.js')
+
 export default {
   name: 'DefaultLayout',
-  components: {
-    Header
-  },
-  data() {
+  data () {
     return {
     }
   }
@@ -30,18 +30,6 @@ export default {
 </script>
 <style lang="scss">
 @import "~/assets/variables.scss";
-
-html {
-  overflow: hidden;
-}
-
-.app {
-  background-color: $bg !important;
-  height: 100vh;
-  overflow-y: scroll;
-  overflow-x: hidden;
-}
-
 .c {
   margin-left: 2em !important;
   margin-top: 5em;
@@ -55,11 +43,11 @@ html {
 }
 
 ::-webkit-scrollbar {
-  background-color: $color4;
+  background-color: #1A171E;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: $color2;
+  background-color: #0D0D0F;
   border-radius: 1em;
 }
 
@@ -73,9 +61,14 @@ p {
 
 /* */
 .animes {
-  margin-top: 1em;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  width: 100%;
 }
+
+/* */
+// .theme--dark.v-tabs>.v-tabs-bar {
+//   background-color: $color2 !important;
+// }
 </style>

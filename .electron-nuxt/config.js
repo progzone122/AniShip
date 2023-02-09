@@ -16,7 +16,7 @@ const config = {
   RESOURCES_DIR: path.join(SRC_DIR, 'extraResources'),
   DIST_DIR: path.join(PROJECT_ROOT, 'dist'),
   BUILD_DIR: path.join(PROJECT_ROOT, 'build'),
-
+  
   DISABLE_BABEL_LOADER: false // experimental
 }
 

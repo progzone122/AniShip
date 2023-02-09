@@ -97,8 +97,7 @@ export default {
 <style scoped lang="scss">
 @import "~/assets/variables.scss";
 
-.theme--light.v-list {
-  background: $color4;
+.v-list {
   display: flex;
   flex-direction: column;
   gap: 1em;

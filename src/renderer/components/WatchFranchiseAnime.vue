@@ -1,28 +1,29 @@
 <template>
-  <div>
-    <v-list color="transparent" class="rounded-lg">
-      <v-list-item-group v-model="model">
-        <div v-for="(item, i) in params.nodes" :key="i">
-          <v-list-item class="rounded-lg" @click="select(item.id)">
-            <v-list-item-content>
-              <v-list-item-title style="color: white;" v-text="item.name" />
-            </v-list-item-content>
-          </v-list-item>
-        </div>
-      </v-list-item-group>
-    </v-list>
-  </div>
+  <v-list color="primary" height="70%">
+    <v-list-item-group v-model="model">
+      <div v-for="(item, i) in params.nodes" :key="i">
+        <v-list-item @click="select(item.id)">
+          <v-list-item-content>
+            <v-list-item-title style="color: white;" v-text="item.name" />
+          </v-list-item-content>
+        </v-list-item>
+      </div>
+    </v-list-item-group>
+  </v-list>
 </template>
 <script>
+const ShikimoriAPI = require('~/assets/shikimori/index')
+const shiki = new ShikimoriAPI()
+
 export default {
   name: 'WatchFranchiseAnime',
   props: ['params'],
-  data () {
+  data() {
     return {
       model: 0
     }
   },
-  created () {
+  created() {
     this.params.nodes.forEach((element, key) => {
       if (element.id === this.params.current_id) {
         this.model = key
@@ -30,10 +31,10 @@ export default {
     })
   },
   methods: {
-    select (id) {
-      this.$router.push({ name: 'watch', query: { id } })
-      // alert(id);
-      // this.$route.query.id = id;
+    select(id) {
+      shiki.animes.get(id).then(shikimori => {
+        this.$store.commit('watch/setShikimori_info', shikimori);
+      });
     }
   }
 }
@@ -42,10 +43,8 @@ export default {
 @import "~/assets/variables.scss";
 
 .v-list {
-    background-color: $color1 !important;
-    padding: 0;
-    margin-top: 0.5em;
-    max-height: 25em;
-    overflow-y: auto;
+  padding: 0;
+  margin-top: 0.5em;
+  overflow-y: auto;
 }
 </style>

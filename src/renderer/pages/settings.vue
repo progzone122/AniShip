@@ -1,15 +1,16 @@
 <template>
-  <div class="main">
-    <div style="height: 100%; display: flex; justify-content: center;">
-      <div class="rounded-lg block-info">
-        <a href="https://progzone122.github.io/anderia-minigame/" target="_blank"><img src="~/assets/logo.svg" alt="" srcset="" class="aniship-icon"></a>
-        <div>
+  <v-container fluid class="main">
+    <v-card class="rounded-lg pa-8" width="30vw" color="primary">
+      <v-row class="align-center">
+        <a href="https://progzone122.github.io/anderia-minigame/" target="_blank"><img src="~/assets/logo.svg" alt=""
+            srcset="" class="aniship-icon"></a>
+        <v-col>
           <h1>AniShip</h1>
           <p style="opacity: 0.9;">Версия: {{ suffix + version }}</p>
-        </div>
-      </div>
-    </div>
-  </div>
+        </v-col>
+      </v-row>
+    </v-card> 
+  </v-container>
 </template>
 <script>
 export default {
@@ -17,10 +18,10 @@ export default {
   layout: 'default',
   data() {
     return {
-      suffix: "night-",
-      version: "0.0.2"
+      suffix: 'night-',
+      version: '0.0.3'
     }
-  },
+  }
 }
 </script>
 <style lang="scss">
@@ -29,20 +30,8 @@ export default {
 <style scss lang="scss">
 @import "~/assets/variables.scss";
 
-.main {
-    margin-top: 6em;
-    .block-info {
-        background-color: $color3;
-        padding: 2em;
-        width: 30em;
-        display: flex;
-        align-items: center;
-        gap: 2em;
-        .aniship-icon {
-            width: 12em;
-            height: 12em;
-            background-size: cover;
-        }
-    }
+.aniship-icon {
+  width: 20vh;
+  background-size: cover;
 }
 </style>

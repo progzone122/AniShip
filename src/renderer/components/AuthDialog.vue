@@ -1,6 +1,6 @@
 <template>
   <v-row justify="center">
-    <v-dialog v-model="dialog" persistent max-width="600px">
+    <v-dialog v-model="dialog" color="primary" persistent max-width="600px">
       <template #activator="{ on, attrs }">
         <v-list-item-content v-bind="attrs" v-on="on">
           <v-list-item-title class="text-h6">
@@ -9,7 +9,7 @@
           <v-list-item-subtitle>Войдите в аккаунт Shikimori</v-list-item-subtitle>
         </v-list-item-content>
       </template>
-      <v-card class="main rounded-lg">
+      <v-card class="rounded-lg" color="primary">
         <v-card-title class="text-h6" style="color: white;">
           Авторизация с помощью Shikimori
         </v-card-title>
@@ -30,7 +30,7 @@
                     <v-btn
                       href="https://shikimori.one/oauth/authorize?client_id=2Ajm5Jmvf2kGKEDlilk2Pka85p2b57H4VTYS6qvWc9w&redirect_uri=urn%3Aietf%3Awg%3Aoauth%3A2.0%3Aoob&response_type=code&scope=user_rates"
                       target="_blank"
-                      elevation="0" rounded color="transparent" class="btn1" dark @click="nextStep(e1)"
+                      elevation="0" rounded color="background" dark @click="nextStep(e1)"
                     >
                       Авторизация
                     </v-btn>
@@ -131,20 +131,6 @@ export default {
     height: 6em;
     margin-bottom: 1em;
 }
-
-.btn1 {
-    background-color: $color1 !important;
-}
-
-.main {
-    background-color: $color2 !important;
-}
-
-.btn_step1 {
-    background-color: $color1 !important;
-    color: white;
-}
-
 .transparent {
     background-color: transparent;
 }

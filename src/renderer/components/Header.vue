@@ -5,12 +5,13 @@
       class="bar"
       dark
       fixed
+      color="primary"
     >
       <div class="left">
         <v-btn
           elevation="0"
           fab
-          class="fab-button"
+          small
           @click="$router.go(-1)"
         >
           <v-icon>
@@ -51,9 +52,9 @@ export default {
 <style lang="scss">
 @import "~/assets/variables.scss";
   .bar{
-    background-color: $color3 !important;
     display: flex;
     gap: 1em;
+    height: 3em !important;
     .left{
       height: 100%;
       display: flex;

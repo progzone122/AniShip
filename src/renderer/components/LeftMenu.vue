@@ -1,15 +1,14 @@
 <template>
-  <v-navigation-drawer permanent expand-on-hover class="menu" fixed dark floating>
+  <v-navigation-drawer permanent expand-on-hover style="margin-top: 3em;" fixed dark floating color="primary">
     <v-list>
       <v-list-item
         v-if="$store.state.account !== undefined && $store.state.account !== null && Object.keys($store.state.account).length !== 0"
-        link
-      >
+        link>
         <v-list-item-content>
           <v-list-item-title class="text-h6">
-            {{ $store.state.account.nickname }}
+            {{ nickname }}
           </v-list-item-title>
-          <v-list-item-subtitle>{{ "#" + $store.state.account.id }}</v-list-item-subtitle>
+          <v-list-item-subtitle>{{ "#" + id }}</v-list-item-subtitle>
         </v-list-item-content>
         <v-list-item-content style="width: 100% !important;">
           <div style="width: 1em;" class="d-flex justify-end">
@@ -44,7 +43,7 @@ const ShikimoriAPI = require('~/assets/shikimori/index')
 const shiki = new ShikimoriAPI()
 export default {
   name: 'LeftMenu',
-  data () {
+  data() {
     return {
       items: [
         {
@@ -72,20 +71,31 @@ export default {
   },
   computed: {
     ...mapActions(['index/fetchProfile']),
-    account () {
-      return this.$store.state.account
+    nickname() {
+      return this.$store.state.account.nickname
+    },
+    id() {
+      return this.$store.state.account.id
+    },
+    watch: {
+      nickname() {
+        return this.$store.state.account.nickname
+      },
+      id() {
+        return this.$store.state.account.id
+      }
     }
   },
-  created () {
-    const refresh_token = localStorage.getItem('refresh_token') ?? null
-    if (refresh_token !== null) {
-      this.$store.dispatch('fetchRefreshAuth', localStorage.getItem('refresh_token')).then(res => {
-        console.log(res)
-        localStorage.setItem('access_token', res.accesstoken)
-        localStorage.setItem('refresh_token', res.refreshtoken)
-        this.$store.dispatch('fetchProfile', res.accesstoken)
-      })
-    }
+  created() {
+    // const refresh_token = localStorage.getItem('refresh_token') ?? null
+    // if (refresh_token !== null) {
+    //   this.$store.dispatch('fetchRefreshAuth', localStorage.getItem('refresh_token')).then(res => {
+    //     console.log(res)
+    //     localStorage.setItem('access_token', res.accesstoken)
+    //     localStorage.setItem('refresh_token', res.refreshtoken)
+    //     this.$store.dispatch('fetchProfile', res.accesstoken)
+    //   })
+    // }
   },
   methods: {
     get_data: item => {
@@ -94,7 +104,7 @@ export default {
       }
       return localStorage.getItem(item)
     },
-    async logout () {
+    async logout() {
       localStorage.removeItem('access_token')
       localStorage.removeItem('refresh_token')
       shiki.credentials.access_token = null

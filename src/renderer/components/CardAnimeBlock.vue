@@ -1,47 +1,62 @@
 <template>
-  <v-card
-    class="mx-6 my-6 card"
-    width="220"
-    max-height="500"
-  >
-    <v-img
-      height="320"
-      :src="image"
-      class="rounded-lg"
-    />
-    <div class="watch_block rounded-lg">
-      <v-icon>mdi-play-circle-outline</v-icon>
+  <v-card class="mr-6 my-2 card rounded-lg" :width="width2" :height="height2"
+    :style="{ 'background-image': 'url(' + image + ')', 'background-size': 'cover' }">
+    <div class="pa-4 shadow">
+      <div class="top">
+        <v-chip color="background" class="align-center">
+          <v-icon small class="mr-1">
+            mdi-star
+          </v-icon>
+          <p style="margin-top: 1.3em;">{{ params.score }}</p>
+        </v-chip>
+      </div>
+      <div class="bottom">
+        <h4 class="clip mb-2">{{ title }}</h4>
+        <v-btn depressed color="primary" width="auto" disabled>
+          <p style="margin-top: 0.9em;">{{ params.episodes_aired }} / {{ params.episodes }}</p>
+        </v-btn>
+      </div>
     </div>
-    <v-card-title style="width: 100%; height: 3.2em;"><h4 class="clip">{{ title }}</h4></v-card-title>
-
-    <v-card-text>
-      <v-row
-        align="center"
-        class="mx-0"
-      >
-        <v-rating
-          :value="params.score"
-          length="10"
-          color="amber"
-          dense
-          half-increments
-          readonly
-          size="12"
-        />
-      </v-row>
-    </v-card-text>
+    <div v-if="watch_button2">
+      <div class="watch_block rounded-lg">
+        <v-btn tile depressed color="success" width="100%" class="watch_button">Смотреть</v-btn>
+      </div>
+    </div>
   </v-card>
 </template>
 <script>
 export default {
   name: 'CardAnimeBlock',
-  props: ['params'],
-  data () {
+  props: ['params', 'watch_button', 'width', 'height'],
+  data() {
     return {
-      image: 'https://shikimori.one' + this.params.image.original
+      image: 'https://shikimori.one' + this.params.image.original,
+      watch_button2: this.watch_button ?? true,
+      width2: this.width ?? 220,
+      height2: this.height ?? 330
     }
   },
-  created () {
+  computed: {
+    computed_image() {
+      return this.params.image.original;
+    },
+    computed_title() {
+      return this.params.name;
+    }
+  },
+  watch: {
+    computed_image() {
+      this.image = 'https://shikimori.one' + this.params.image.original;
+    },
+    computed_title() {
+      if (this.params.russian !== null && this.params.russian !== undefined) {
+        this.title = this.params.russian
+      } else {
+        this.title = this.params.name
+      }
+    }
+  },
+  created() {
     if (this.params.russian !== null && this.params.russian !== undefined) {
       this.title = this.params.russian
     } else {
@@ -52,38 +67,75 @@ export default {
 </script>
 <style scoped lang="scss">
 @import "~/assets/variables.scss";
-  .card{
-    background-color: transparent !important;
-    padding-bottom: 1em;
-    box-shadow: none !important;
-    &:hover{
-      // background-color: $color3 !important;
-      cursor: pointer;
-      .watch_block{
-        display: flex;
-      }
+
+@keyframes slideTop {
+  from {
+    height: 0;
+  }
+
+  to {
+    height: 2em;
+  }
+}
+
+.card {
+  background-color: transparent !important;
+  padding-bottom: 1em;
+  box-shadow: none !important;
+
+  &:hover {
+    // background-color: $color3 !important;
+    cursor: pointer;
+
+    .watch_block {
+      display: flex;
     }
-    .watch_block{
-      width: 100%;
-      height: 77.3%;
-      position: absolute;
-      top: 0;
-      z-index: 2;
-      justify-content: center;
-      align-items: center;
-      background-color: rgba(0, 0, 0, 0.7);
-      display: none;
-      i{
-        font-size: 3em !important;
-      }
+
+    .watch_button {
+      animation: slideTop 0.2s;
     }
   }
-  .clip{
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+
+  .watch_block {
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    z-index: 2;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: none;
+
+    i {
+      font-size: 3em !important;
+    }
   }
-  h4{
-    color: white;
-  }
+}
+
+.clip {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+h4 {
+  color: white;
+}
+
+.top {
+  height: 38%;
+}
+
+.bottom {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.shadow {
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(180deg, rgba(2, 0, 36, 0) 0%, rgba(0, 0, 0, 0.814145726650035) 97%);
+  position: absolute;
+}
 </style>
