@@ -1,5 +1,11 @@
 # AniShip
 
+![изображение](https://user-images.githubusercontent.com/80642969/218182119-de77efd6-5ee2-4c6d-8c15-2b2d997da619.png)
+![изображение](https://user-images.githubusercontent.com/80642969/218182174-324fcb3f-0c63-4985-bb10-dcb597270e94.png)
+![изображение](https://user-images.githubusercontent.com/80642969/218182469-c072df6e-28fe-486d-a446-fa739687e76c.png)
+![изображение](https://user-images.githubusercontent.com/80642969/218182841-f6be662a-67b8-425f-a0c3-f48ac095ce8f.png)
+![изображение](https://user-images.githubusercontent.com/80642969/218182610-a1370137-f75c-404d-8805-b96e96197bd9.png)
+
 > Собирать на версии Node.js 16.x!
 
 #### Build Setup
