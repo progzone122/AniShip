@@ -1,6 +1,8 @@
 <template>
-  <v-card class="mr-6 my-2 card rounded-lg" :width="width2" :height="height2"
-    :style="{ 'background-image': 'url(' + image + ')', 'background-size': 'cover' }">
+  <v-card
+    class="mr-6 my-2 card rounded-lg" :width="width2" :height="height2"
+    :style="{ 'background-image': 'url(' + image + ')', 'backgroundSize': 'cover !important' }" color="transparent"
+  >
     <div class="pa-4 shadow">
       <div class="top">
         <v-chip color="background" class="align-center">
@@ -8,6 +10,12 @@
             mdi-star
           </v-icon>
           <p style="margin-top: 1.3em;">{{ params.score }}</p>
+        </v-chip>
+        <v-chip v-if="!watch_button2 && params.next_episode_at" color="background" class="align-center">
+          <v-icon small class="mr-1">
+            mdi-timer
+          </v-icon>
+          <p style="margin-top: 1.3em;">{{ next_episode_at() }}</p>
         </v-chip>
       </div>
       <div class="bottom">
@@ -25,10 +33,12 @@
   </v-card>
 </template>
 <script>
+import { format } from 'date-fns'
+
 export default {
   name: 'CardAnimeBlock',
   props: ['params', 'watch_button', 'width', 'height'],
-  data() {
+  data () {
     return {
       image: 'https://shikimori.one' + this.params.image.original,
       watch_button2: this.watch_button ?? true,
@@ -37,18 +47,18 @@ export default {
     }
   },
   computed: {
-    computed_image() {
-      return this.params.image.original;
+    computed_image () {
+      return this.params.image.original
     },
-    computed_title() {
-      return this.params.name;
+    computed_title () {
+      return this.params.name
     }
   },
   watch: {
-    computed_image() {
-      this.image = 'https://shikimori.one' + this.params.image.original;
+    computed_image () {
+      this.image = 'https://shikimori.one' + this.params.image.original
     },
-    computed_title() {
+    computed_title () {
       if (this.params.russian !== null && this.params.russian !== undefined) {
         this.title = this.params.russian
       } else {
@@ -56,11 +66,18 @@ export default {
       }
     }
   },
-  created() {
+  created () {
     if (this.params.russian !== null && this.params.russian !== undefined) {
       this.title = this.params.russian
     } else {
       this.title = this.params.name
+    }
+  },
+  methods: {
+    next_episode_at () {
+      const date = format(new Date(this.params.next_episode_at), 'dd.MM.yyyy')
+      console.log(date)
+      return date
     }
   }
 }
@@ -125,10 +142,10 @@ h4 {
 }
 
 .bottom {
-  height: 100%;
+  height: 60%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-end;
 }
 
 .shadow {

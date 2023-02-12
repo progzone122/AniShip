@@ -13,15 +13,21 @@
                 <v-row>
                   <v-col v-for="(q, key) in quality" :key="n" cols="10" md="4">
                     <v-item v-slot="{ active, toggle }">
-                      <v-card :color="active ? 'primary' : ''" class="d-flex align-center rounded-lg serie_card" dark
+                      <v-card
+                        :color="active ? 'primary' : ''" class="d-flex align-center rounded-lg serie_card" dark
                         height="40" width="70" elevation="0" color="transparent"
-                        @click="toggle(); quality_select = pl.sources[0].setQuality(key).select;">
-                        <div v-if="(quality_select !== key)" class="text-h6 flex-grow-1 text-center rounded-lg"
-                          style="text-transform: uppercase;">
+                        @click="toggle(); quality_select = pl.sources[source].setQuality(key).select;"
+                      >
+                        <div
+                          v-if="(quality_select !== key)" class="text-h6 flex-grow-1 text-center rounded-lg"
+                          style="text-transform: uppercase;"
+                        >
                           {{ q }}
                         </div>
-                        <div v-if="quality_select === key" style="text-transform: uppercase;"
-                          class="text-h6 flex-grow-1 text-center rounded-lg background">
+                        <div
+                          v-if="quality_select === key" style="text-transform: uppercase;"
+                          class="text-h6 flex-grow-1 text-center rounded-lg background"
+                        >
                           {{ q }}
                         </div>
                       </v-card>
@@ -40,8 +46,10 @@
         <v-row>
           <v-col v-for="(item, key) in playlist" :key="n" cols="12" md="3">
             <v-item v-slot="{ active, toggle }">
-              <v-card :color="active ? 'primary' : ''" class="d-flex align-center serie_card unselectable rounded-xl"
-                dark height="110" elevation="0" color="transparent" @click="toggle(); pl.sources[0].play(key + 1)">
+              <v-card
+                :color="active ? 'primary' : ''" class="d-flex align-center serie_card unselectable rounded-xl"
+                dark height="110" elevation="0" color="transparent" @click="toggle(); pl.sources[source].play(key + 1)"
+              >
                 <div class="shadow">
                   <div v-if="active === false" class="text-h4 flex-grow-1 text-center banner">
                     {{ item.serie }} серия
@@ -61,12 +69,12 @@
   </v-card>
 </template>
 <script>
-const api = require("sources");
+const api = require('sources')
 
 export default {
   name: 'HlsPlayer',
   props: ['shikimori_info', 'source'],
-  data() {
+  data () {
     return {
       playerOptions: {
         controls: ['play-large', 'play', 'progress', 'current-time', 'mute', 'volume', 'settings', 'fullscreen'],
@@ -79,11 +87,11 @@ export default {
     }
   },
   computed: {
-    player() {
+    player () {
       return this.$refs.plyr.player
     }
   },
-  async mounted() {
+  async mounted () {
     this.api = require('sources')
     console.log(this.api)
     this.pl = new this.api({
@@ -91,7 +99,7 @@ export default {
       plyr: this.player,
       axios: this.$axios
     })
-    console.log(this.pl.sources[this.source]);
+    console.log(this.pl.sources[this.source])
     this.playlist = await this.pl.sources[this.source].playlist
     this.quality = this.pl.sources[this.source].getQuality().quality
     this.quality_select = this.pl.sources[this.source].getQuality().select
@@ -99,7 +107,7 @@ export default {
     this.pl.sources[this.source].play()
     console.log(this.playlist)
   },
-  async created() {
+  async created () {
 
   }
 }

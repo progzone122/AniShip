@@ -1,8 +1,10 @@
 <template>
   <v-card class="pa-4" color="primary" height="100%">
     <!-- <video data-plyr-config="{'autoplay': false}" /> -->
-    <iframe :src="link" frameborder="0" webkitallowfullscreen mozallowfullscreen
-      allowfullscreen allow="autoplay; fullscreen" width="100%" height="100%"></iframe>
+    <iframe
+      :src="link" frameborder="0" webkitallowfullscreen mozallowfullscreen
+      allowfullscreen allow="autoplay; fullscreen" width="100%" height="100%"
+    />
     <!-- <div style="padding-left: 0.6em; display: flex; align-items: center; gap: 1em;">
       <v-col>
         <v-row class="d-flex align-center">
@@ -61,11 +63,11 @@
   </v-card>
 </template>
 <script>
-const api = require('sources');
+const api = require('sources')
 export default {
   name: 'IframePlayer',
   props: ['shikimori_info', 'source'],
-  data() {
+  data () {
     return {
       quality: null,
       quality_select: null,
@@ -74,16 +76,16 @@ export default {
       link: null
     }
   },
-  async mounted() {
+  async mounted () {
 
   },
-  async created() {
+  async created () {
     this.pl = new api({
       shikimori_info: this.shikimori_info,
       plyr: this.player,
       axios: this.$axios
     })
-    this.link = await this.pl.sources[this.source].getIframeLink();
+    this.link = await this.pl.sources[this.source].getIframeLink()
     console.log(this.pl)
   }
 }

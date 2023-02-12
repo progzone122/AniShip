@@ -18,12 +18,12 @@ const shiki = new ShikimoriAPI()
 export default {
   name: 'WatchFranchiseAnime',
   props: ['params'],
-  data() {
+  data () {
     return {
       model: 0
     }
   },
-  created() {
+  created () {
     this.params.nodes.forEach((element, key) => {
       if (element.id === this.params.current_id) {
         this.model = key
@@ -31,10 +31,10 @@ export default {
     })
   },
   methods: {
-    select(id) {
+    select (id) {
       shiki.animes.get(id).then(shikimori => {
-        this.$store.commit('watch/setShikimori_info', shikimori);
-      });
+        this.$store.commit('watch/setShikimori_info', shikimori)
+      })
     }
   }
 }

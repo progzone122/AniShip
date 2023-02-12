@@ -7,6 +7,7 @@ app.on('window-all-closed', function () {
   if (process.platform !== 'darwin') app.quit()
 })
 
+require('../renderer/assets/checkpaths.js')
 require('./rpc')
 // Load here all startup windows
 require('./mainWindow')

@@ -1,6 +1,8 @@
 <template>
-  <v-select v-model="e7" dark :items="items" hide-details solo class="s rounded-lg justify-center" dense flat
-    background-color="success" append-icon="mdi-play">
+  <v-select
+    v-model="e7" dark :items="items" hide-details solo class="s rounded-lg justify-center" dense flat
+    background-color="success" append-icon="mdi-play"
+  >
     <template #label>
       <p>Смотреть</p>
     </template>
@@ -23,28 +25,28 @@
   </v-select>
 </template>
 <script>
-const api = require("sources");
+const api = require('sources')
 export default {
   name: 'SetAnimeList',
   props: ['anime'],
-  data() {
+  data () {
     return {
       items: [],
       e7: null
     }
   },
-  created() {
+  created () {
     this.pl = new api({
       shikimori_info: this.anime,
       plyr: null,
       axios: this.$axios
     })
     this.pl.sources.forEach(element => {
-      this.items.push(element.name);
-    });
+      this.items.push(element.name)
+    })
   },
   methods: {
-    setList(item) {
+    setList (item) {
       $nuxt.$emit('sourceShow', this.items.indexOf(item))
     }
   }

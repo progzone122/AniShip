@@ -2,19 +2,19 @@
   <v-container fluid>
     <IndexAnimeTabs />
     <div id="top" style="display: flex; gap: 1em; margin-left: 1em;">
-        <div class="animes">
-          <div
-            v-for="anime in animes_list" :key="anime"
-            @click="$router.push({ name: 'watch', query: { id: anime.id } })"
-          >
-            <CardAnimeBlock :params="anime" />
-          </div>
-          <infinite-loading v-if="animes_list" spinner="spiral" @infinite="infiniteScroll" />
+      <div class="animes">
+        <div
+          v-for="anime in animes_list" :key="anime"
+          @click="$router.push({ name: 'watch', query: { id: anime.id } })"
+        >
+          <CardAnimeBlock :params="anime" />
         </div>
+        <infinite-loading v-if="animes_list" spinner="spiral" @infinite="infiniteScroll" />
       </div>
-      <!-- -->  
+    </div>
+    <!-- -->
     <v-btn
-      v-if="top_button" elevation="6" fab large fixed style="bottom: 2em; right: 3em;" class="top-button" 
+      v-if="top_button" elevation="6" fab large fixed style="bottom: 2em; right: 3em;" class="top-button"
       color="primary"
       @click="toTop()"
     >

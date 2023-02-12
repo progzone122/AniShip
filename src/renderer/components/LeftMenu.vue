@@ -3,7 +3,8 @@
     <v-list>
       <v-list-item
         v-if="$store.state.account !== undefined && $store.state.account !== null && Object.keys($store.state.account).length !== 0"
-        link>
+        link
+      >
         <v-list-item-content>
           <v-list-item-title class="text-h6">
             {{ nickname }}
@@ -43,7 +44,7 @@ const ShikimoriAPI = require('~/assets/shikimori/index')
 const shiki = new ShikimoriAPI()
 export default {
   name: 'LeftMenu',
-  data() {
+  data () {
     return {
       items: [
         {
@@ -71,22 +72,22 @@ export default {
   },
   computed: {
     ...mapActions(['index/fetchProfile']),
-    nickname() {
+    nickname () {
       return this.$store.state.account.nickname
     },
-    id() {
+    id () {
       return this.$store.state.account.id
     },
     watch: {
-      nickname() {
+      nickname () {
         return this.$store.state.account.nickname
       },
-      id() {
+      id () {
         return this.$store.state.account.id
       }
     }
   },
-  created() {
+  created () {
     // const refresh_token = localStorage.getItem('refresh_token') ?? null
     // if (refresh_token !== null) {
     //   this.$store.dispatch('fetchRefreshAuth', localStorage.getItem('refresh_token')).then(res => {
@@ -104,7 +105,7 @@ export default {
       }
       return localStorage.getItem(item)
     },
-    async logout() {
+    async logout () {
       localStorage.removeItem('access_token')
       localStorage.removeItem('refresh_token')
       shiki.credentials.access_token = null

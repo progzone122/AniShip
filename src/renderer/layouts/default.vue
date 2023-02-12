@@ -18,8 +18,6 @@
 </template>
 
 <script>
-require('~/assets/checkpaths.js')
-
 export default {
   name: 'DefaultLayout',
   data () {

@@ -9,7 +9,7 @@ export const state = () => ({
   ranked_released: [],
   released: [],
   anons: [],
-  watchSource_active: null,
+  watchSource_active: null
   // favorites: {
   //   watching: null,
   //   planned: null,
@@ -52,7 +52,7 @@ export const mutations = {
   },
   addAnons (state, req) {
     state.anons.push(req)
-  },
+  }
   // setFavorites (state, obj) {
   //   state.favorites[obj.key] = obj.value;
   // }

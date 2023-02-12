@@ -28,7 +28,7 @@ module.exports = {
   css: [
     'plyr/dist/plyr.css',
     '@/assets/css/overwrite.css',
-    '@/assets/css/global.css',
+    '@/assets/css/global.css'
   ],
   components: true,
   buildModules: [
@@ -49,7 +49,7 @@ module.exports = {
     // dark: true,
     options: {
       customProperties: true
-    },
+    }
     // theme: {
     //   dark: {
     //     primary: '#2196F3',

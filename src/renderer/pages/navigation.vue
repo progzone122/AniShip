@@ -1,26 +1,26 @@
 <template>
-    <div class="main">
-      <div class="left">
-        <v-chip-group v-model="genres_active" column multiple class="filters-group">
-          <div v-for="genre in genres" :key="genre.id">
-            <v-chip color="primary" :value="genre.id" filter>
-              <h4>{{ genre.russian }}</h4>
-            </v-chip>
-          </div>
-        </v-chip-group>
-      </div>
-      <div class="right">
-        <div class="animes">
-          <div
-            v-for="anime in animes" :key="anime"
-            @click="$router.push({ name: 'watch', query: { id: anime.id } })"
-          >
-            <CardAnimeBlock :params="anime" />
-          </div>
-          <infinite-loading v-if="animes.length" spinner="spiral" @infinite="infiniteScroll" />
+  <div class="main">
+    <div class="left">
+      <v-chip-group v-model="genres_active" column multiple class="filters-group">
+        <div v-for="genre in genres" :key="genre.id">
+          <v-chip color="primary" :value="genre.id" filter>
+            <h4>{{ genre.russian }}</h4>
+          </v-chip>
         </div>
+      </v-chip-group>
+    </div>
+    <div class="right">
+      <div class="animes">
+        <div
+          v-for="anime in animes" :key="anime"
+          @click="$router.push({ name: 'watch', query: { id: anime.id } })"
+        >
+          <CardAnimeBlock :params="anime" />
+        </div>
+        <infinite-loading v-if="animes.length" spinner="spiral" @infinite="infiniteScroll" />
       </div>
     </div>
+  </div>
 </template>
 
 <script>

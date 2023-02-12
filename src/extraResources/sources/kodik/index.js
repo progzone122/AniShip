@@ -2,6 +2,7 @@ const config = require('./config.json')
 
 class Source {
   constructor(obj) {
+    this.config = config;
     this.name = config.name
     this.player_ref = config.player_ref;
     this.plyr = obj.plyr
