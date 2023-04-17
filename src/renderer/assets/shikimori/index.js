@@ -8,8 +8,8 @@ const User_rates = require('./lib/v2/user_rates')
 class ShikimoriAPI {
   constructor () {
     // Shikimori links
-    this.apilink = 'https://shikimori.one/api'
-    this.authlink = 'https://shikimori.one/oauth'
+    this.apilink = 'https://shikimori.me/api'
+    this.authlink = 'https://shikimori.me/oauth'
     // Auth vars
     this.credentials = {
       redirecturi: 'urn:ietf:wg:oauth:2.0:oob',

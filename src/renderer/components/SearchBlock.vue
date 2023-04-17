@@ -43,7 +43,7 @@ asdasd
       <template #item="{ item }">
         <v-list-item class="list-results" @click="$router.push({ name: 'watch', query: { id: item.id } });">
           <div style="width: 3em; margin-right: 1em;">
-            <v-img height="70" :src="'https://shikimori.one' + item.image.x96" class="rounded-lg" />
+            <v-img height="70" :src="'https://shikimori.me' + item.image.x96" class="rounded-lg" />
           </div>
           <v-list-item-content>
             <v-list-item-title style="color: white;" v-text="item.russian" />

@@ -25,11 +25,11 @@ export default {
     }
   },
   async fetch () {
-    this.$axios.get(`https://shikimori.one/api/animes/${this.id}/similar`).then(res => {
+    this.$axios.get(`https://shikimori.me/api/animes/${this.id}/similar`).then(res => {
       this.animes = res.data
     }).catch(err => {
       setTimeout(() => {
-        this.$axios.get(`https://shikimori.one/api/animes/${this.id}/similar`).then(res => {
+        this.$axios.get(`https://shikimori.me/api/animes/${this.id}/similar`).then(res => {
           this.animes = res.data
         })
       }, 1000)
@@ -42,8 +42,10 @@ export default {
     async setAnime (anime) {
       const shikimori = await shiki.animes.get(anime.id)
       const shikimori_franchise = await shiki.animes.getFranchise(anime.id)
-      await this.$store.commit('watch/setShikimori_info', shikimori)
-      await this.$store.commit('watch/setFranchise', shikimori_franchise)
+      this.$nuxt.$emit('watchSimilarAnimes', {
+        shikimori,
+        shikimori_franchise
+      });
     }
   }
 }

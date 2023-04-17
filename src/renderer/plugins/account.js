@@ -5,7 +5,7 @@ const shiki = new Shikimori()
 export default function (context) {
   const refreshtoken = localStorage.getItem('refresh_token') ?? null
   if (refreshtoken !== null) {
-    shiki.auth.refreshToken({
+    shiki.auth.refreshToken({ 
       clientid: '2Ajm5Jmvf2kGKEDlilk2Pka85p2b57H4VTYS6qvWc9w',
       clientsecret: 'YDg7tpBhQBGAUFY9zZbU89sL6kF9mtJztERjTWtNi6o',
       refreshtoken,

@@ -63,6 +63,11 @@ export default {
           to: 'favorites'
         },
         {
+          icon: 'mdi-calendar',
+          title: 'Календарь онгоингов',
+          to: 'calendar_ongoings'
+        },
+        {
           icon: 'mdi-cog-outline',
           title: 'Настройки',
           to: 'settings'

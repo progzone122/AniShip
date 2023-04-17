@@ -6,10 +6,8 @@
           <CardAnimeBlock :params="anime_info" :watch_button="false" width="100%" height="27vw" class="rounded-xl" />
           <v-divider class="my-4" />
           <WatchAnimeSources v-if="hls_player === null && iframe_player === null" class="my-2 rounded-xl" />
-          <v-btn
-            v-if="hls_player !== null || iframe_player !== null" rounded color="accent" dark width="100%"
-            @click="hls_player = null; iframe_player = null;"
-          >
+          <v-btn v-if="hls_player !== null || iframe_player !== null" rounded color="accent" dark width="100%"
+            @click="hls_player = null; iframe_player = null;">
             Выйти из плеера
           </v-btn>
           <SetAnimeLists v-if="account" class="my-2" :anime="anime_info" />
@@ -19,6 +17,11 @@
         <v-col class="mb-4">
           <v-card class="pa-4 rounded-lg" color="primary" height="30vw">
             <WatchScreenshotsCarousel :anime_id="anime_info.id" height="100%" class="rounded-xlspo" />
+          </v-card>
+        </v-col>
+        <v-col class="mb-4">
+          <v-card class="pa-4 rounded-lg" color="primary" height="30vw">
+            <WatchVideosCarousel :videos="anime_info.videos" height="100%" class="rounded-xlspo" />
           </v-card>
         </v-col>
         <v-col>
@@ -52,7 +55,7 @@
             <v-col>
               <h4>Франшиза</h4>
             </v-col>
-            <WatchFranchiseAnime v-if="getFranchise.nodes.length !== 0" :params="getFranchise" />
+            <WatchFranchiseAnime v-if="shikimori_franchise.nodes.length !== 0" :params="shikimori_franchise" />
             <v-list v-else color="primary">
               <v-list-item-group v-model="model">
                 <v-list-item>
@@ -85,7 +88,6 @@
 </template>
 
 <script>
-import console from 'console'
 import { mapGetters, mapActions } from 'vuex'
 
 const ShikimoriAPI = require('~/assets/shikimori/index')
@@ -98,13 +100,15 @@ export default {
     HlsPlayer: () => import('~/components/players/HlsPlayer.vue')
   },
   layout: 'default',
-  async asyncData ({ store, query }) {
-    const shikimori = await shiki.animes.get(query.id)
-    const shikimori_franchise = await shiki.animes.getFranchise(query.id)
-    await store.commit('watch/setShikimori_info', shikimori)
-    await store.commit('watch/setFranchise', shikimori_franchise)
+  async asyncData({ store, query }) {
+    const anime_info = await shiki.animes.get(query.id);
+    const shikimori_franchise = await shiki.animes.getFranchise(query.id);
+    return {
+      anime_info,
+      shikimori_franchise
+    }
   },
-  data () {
+  data() {
     return {
       image: {},
       anime_sources: [],
@@ -114,52 +118,45 @@ export default {
       iframe_player: null
     }
   },
-  created () {
-    console.log(this.anime_info)
+  created() {
     this.$nuxt.$on('sourceShow', $event => this.sourceShow($event))
+    this.$nuxt.$on('watchSimilarAnimes', $event => {
+      this.anime_info = $event.shikimori;
+      this.shikimori_franchise = $event.shikimori_franchise;
+    });
+    this.$nuxt.$on('watchFranchiseAnime', $event => {
+      this.anime_info = $event.shikimori;
+    });
   },
   computed: {
     ...mapGetters([
       'account'
     ]),
-    ...mapGetters('watch', [
-      'getFranchise',
-      'getGenres',
-      'getEpisodes'
-    ]),
-    anime_info () {
-      return this.$store.state.watch.shikimori_info
-    }
-  },
-  watch: {
-    anime_info () {
-      return this.$store.state.watch.shikimori_info
+    getGenres() {
+      return this.anime_info.genres
     },
-    getGenres () {
-      return this.$store.state.watch.shikimori_info.genres
-    },
-    getEpisodes () {
+    getEpisodes() {
       return {
-        episodes: this.$store.state.watch.shikimori_info.episodes ?? 0,
-        episodes_aired: this.$store.state.watch.shikimori_info.episodes_aired ?? 0,
-        next_episode_at: this.$store.state.watch.shikimori_info.next_episode_at ?? null
+        episodes: this.anime_info.episodes ?? 0,
+        episodes_aired: this.anime_info.episodes_aired ?? 0,
+        next_episode_at: this.anime_info.next_episode_at ?? null
       }
     }
   },
   methods: {
-    getShikiStatus (status) {
+    getShikiStatus(status) {
       switch (status) {
-      case 'released':
-        return 'вышло'
-      case 'ongoing':
-        return 'онгоинг'
-      case 'anons':
-        return 'анонс'
-      default:
-        return 'ошибка загрузки'
+        case 'released':
+          return 'вышло'
+        case 'ongoing':
+          return 'онгоинг'
+        case 'anons':
+          return 'анонс'
+        default:
+          return 'ошибка загрузки'
       }
     },
-    sourceShow ($event) {
+    sourceShow($event) {
       const api = require('sources')
       const pl = new api({
         shikimori_info: null,
@@ -167,14 +164,14 @@ export default {
         axios: null
       })
       switch (pl.sources[$event].player_ref) {
-      case 'iframe':
-        this.iframe_player = $event
-        break
-      case 'hls':
-        this.hls_player = $event
-        break
-      default:
-        break
+        case 'iframe':
+          this.iframe_player = $event
+          break
+        case 'hls':
+          this.hls_player = $event
+          break
+        default:
+          break
       }
     }
   }

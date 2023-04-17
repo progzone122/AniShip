@@ -40,7 +40,7 @@ export default {
   props: ['params', 'watch_button', 'width', 'height'],
   data () {
     return {
-      image: 'https://shikimori.one' + this.params.image.original,
+      image: 'https://shikimori.me' + this.params.image.original,
       watch_button2: this.watch_button ?? true,
       width2: this.width ?? 220,
       height2: this.height ?? 330
@@ -56,7 +56,8 @@ export default {
   },
   watch: {
     computed_image () {
-      this.image = 'https://shikimori.one' + this.params.image.original
+      console.log(this.params.image.original);
+      this.image = 'https://shikimori.me' + this.params.image.original
     },
     computed_title () {
       if (this.params.russian !== null && this.params.russian !== undefined) {

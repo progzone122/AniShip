@@ -31,10 +31,11 @@ export default {
     })
   },
   methods: {
-    select (id) {
-      shiki.animes.get(id).then(shikimori => {
-        this.$store.commit('watch/setShikimori_info', shikimori)
-      })
+    async select (id) {
+      const shikimori = await shiki.animes.get(id);
+      this.$nuxt.$emit('watchFranchiseAnime', {
+        shikimori
+      });
     }
   }
 }

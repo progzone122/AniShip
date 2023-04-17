@@ -53,7 +53,7 @@ export default {
   },
   computed: {
     url () {
-      return `https://shikimori.one/api/animes?genre=${this.genres_active}&limit=20&page=${this.page}&order=popularity`
+      return `https://shikimori.me/api/animes?genre=${this.genres_active}&limit=20&page=${this.page}&order=popularity`
     }
   },
   watch: {

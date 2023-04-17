@@ -28,7 +28,7 @@
                       код авторизации и нажмите кнопку "Продолжить"
                     </p>
                     <v-btn
-                      href="https://shikimori.one/oauth/authorize?client_id=2Ajm5Jmvf2kGKEDlilk2Pka85p2b57H4VTYS6qvWc9w&redirect_uri=urn%3Aietf%3Awg%3Aoauth%3A2.0%3Aoob&response_type=code&scope=user_rates"
+                      href="https://shikimori.me/oauth/authorize?client_id=2Ajm5Jmvf2kGKEDlilk2Pka85p2b57H4VTYS6qvWc9w&redirect_uri=urn%3Aietf%3Awg%3Aoauth%3A2.0%3Aoob&response_type=code&scope=user_rates"
                       target="_blank"
                       elevation="0" rounded color="background" dark @click="nextStep(e1)"
                     >
@@ -116,7 +116,7 @@ export default {
         localStorage.setItem('access_token', res.accesstoken)
         localStorage.setItem('refresh_token', res.refreshtoken)
         this.dialog = false
-        this.$store.dispatch('fetchProfile', res.accesstoken)
+        await this.$store.dispatch('fetchProfile', res.accesstoken)
         this.$router.go(0)
       })
     }
