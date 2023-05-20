@@ -40,7 +40,7 @@ export default {
     })
     console.log(genres_resp)
     return {
-      genres
+      genres: genres_resp
     }
   },
   data () {
@@ -48,7 +48,7 @@ export default {
       genres_active: null,
       animes: [],
       delayTimer: null,
-      page: 1
+      page: 1,
     }
   },
   computed: {
@@ -66,18 +66,18 @@ export default {
 
   },
   methods: {
-    // search_filters() {
-    //   console.log(this.genres_active)
-    //   if (this.delayTimer !== null) {
-    //     clearTimeout(this.delayTimer)
-    //   }
-    //   this.delayTimer = setTimeout(() => {
-    //     this.$axios.get(this.url).then(res => {
-    //       this.animes = res
-    //     })
-    //     console.log(this.items)
-    //   }, 1000)
-    // },
+    search_filters() {
+      console.log(this.genres_active)
+      if (this.delayTimer !== null) {
+        clearTimeout(this.delayTimer)
+      }
+      this.delayTimer = setTimeout(() => {
+        this.$axios.get(this.url).then(res => {
+          this.animes = res
+        })
+        console.log(this.items)
+      }, 1000)
+    },
     async fetchData () {
       const response = await this.$axios.get(this.url)
       this.animes = response.data

@@ -1,7 +1,7 @@
 {
   "name": "aniship-night",
-  "version": "0.0.4",
-  "description": "An electron-nuxt project",
+  "version": "0.0.4-2",
+  "description": "AniShip",
   "main": "./dist/main/index.js",
   "scripts": {
     "dev": "node .electron-nuxt/dev.js",

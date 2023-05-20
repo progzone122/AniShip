@@ -17,6 +17,9 @@ class ShikimoriAPI {
       access_token: null,
       refresh_token: null
     }
+    //
+    this.clientid = "2Ajm5Jmvf2kGKEDlilk2Pka85p2b57H4VTYS6qvWc9w";
+    this.clientsecret = "YDg7tpBhQBGAUFY9zZbU89sL6kF9mtJztERjTWtNi6o";
     // API functions
     this.request = new APIrequest(this)
     this.auth = new Auth(this)

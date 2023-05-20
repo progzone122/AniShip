@@ -50,7 +50,7 @@ class Animes {
 
   // https://shikimori.me/api/doc/1.0/calendars
   async getCalendar () {
-    return this.shikimori.request.get(`calendar`)
+    return this.shikimori.request.get('calendar')
   }
 }
 module.exports = Animes

@@ -45,7 +45,7 @@ export default {
       this.$nuxt.$emit('watchSimilarAnimes', {
         shikimori,
         shikimori_franchise
-      });
+      })
     }
   }
 }

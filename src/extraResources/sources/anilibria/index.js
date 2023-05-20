@@ -3,16 +3,16 @@ const libs = require('../libs')
 const config = require('./config.json')
 
 class Source {
-  constructor(obj) {
-    this.config = config;
+  constructor (obj) {
+    this.config = config
     this.name = config.name
-    this.player_ref = config.player_ref;
+    this.player_ref = config.player_ref
     this.shikimori_info = obj.shikimori_info ?? null
     this.playerOptions = {
       controls: ['play-large', 'play', 'progress', 'current-time', 'mute', 'volume', 'settings', 'fullscreen'],
       settings: ['quality', 'speed', 'loop']
     },
-      this.quality = ['fhd', 'hd', 'sd']
+    this.quality = ['fhd', 'hd', 'sd']
     this.quality_select = 1
     this.plyr = obj.plyr
     this.axios = obj.axios
@@ -26,7 +26,7 @@ class Source {
     this.libs = new libs(this)
   }
 
-  async get_playlist() {
+  async get_playlist () {
     return await this.axios.get(`https://api.anilibria.tv/v2/searchTitles?search=${encodeURIComponent(this.shikimori_info.name)}&limit=1`).then(result => {
       const data = result.data[0].player.playlist
       const data2 = []
@@ -60,19 +60,19 @@ class Source {
     })
   }
 
-  getQuality() {
-    console.log(this.libs);
+  getQuality () {
+    console.log(this.libs)
     console.log(this.libs.player.getQuality())
     return this.libs.player.getQuality()
   }
 
-  setQuality(new_quality) {
+  setQuality (new_quality) {
     this.libs.player.setQuality(new_quality)
     this.play()
     return this.libs.player.getQuality()
   }
 
-  play(episode = null) {
+  play (episode = null) {
     this.libs.player.HlsPlay({ episode })
   }
 }
