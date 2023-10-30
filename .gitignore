@@ -1,5 +1,10 @@
-.nuxt
-dist
-build/*
-!build/icons
 node_modules
+*.log*
+.nuxt
+.nitro
+.cache
+.output
+.env
+.vsc
+.code
+dist
