@@ -1,5 +1,12 @@
 {
+<<<<<<< HEAD
   "private": true,
+=======
+  "name": "aniship-night",
+  "version": "0.0.4",
+  "description": "An electron-nuxt project",
+  "main": "./dist/main/index.js",
+>>>>>>> parent of b0444f4 (aniship-night 0.0.4-2)
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
