@@ -1,10 +1,12 @@
 # AniShip (tauri BETA)
 
-![изображение](https://github.com/progzone122/AniShip/assets/80642969/45c84eaa-51f5-441e-86fb-ec37d0b00785)
-![изображение](https://github.com/progzone122/AniShip/assets/80642969/aad9f7c4-ffb0-409b-a4da-57cb4dfda019)
-![изображение](https://github.com/progzone122/AniShip/assets/80642969/ad54610b-a82a-4045-954e-d027303c4892)
-![изображение](https://github.com/progzone122/AniShip/assets/80642969/b0678ee9-7418-472d-b03e-51501a43cfdd)
-
+![изображение](https://user-images.githubusercontent.com/80642969/232580261-4d5cd52c-0fc2-41a1-b7f9-de5929018ce7.png)
+![изображение](https://user-images.githubusercontent.com/80642969/232579839-3b1ba5ad-feac-43f3-8347-01a386c4df8f.png)
+![изображение](https://user-images.githubusercontent.com/80642969/232579947-ab3ddbbd-f19f-43ae-b1ac-7520b1433471.png)
+![изображение](https://user-images.githubusercontent.com/80642969/232579746-0fbed659-3428-4300-8616-ef70b445fe22.png)
+![изображение](https://user-images.githubusercontent.com/80642969/232580112-bb0857ee-2a56-4b03-a9a2-4250add03511.png)
+![изображение](https://user-images.githubusercontent.com/80642969/232580527-d06f5bd3-2de0-49e1-a1e0-0deb16a290b6.png)
+![изображение](https://user-images.githubusercontent.com/80642969/232580934-d07699e4-7e62-48f2-88e2-e4994431c7a1.png)
 
 > Рекомендуется собирать на версии Node.js 18.x (Но ограничения нет)
 
