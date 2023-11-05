@@ -1,38 +1,73 @@
 {
-<<<<<<< HEAD
-  "private": true,
-=======
   "name": "aniship-night",
-  "version": "0.0.4",
-  "description": "An electron-nuxt project",
+  "version": "0.0.4-2",
+  "description": "AniShip",
   "main": "./dist/main/index.js",
->>>>>>> parent of b0444f4 (aniship-night 0.0.4-2)
   "scripts": {
-    "build": "nuxt build",
-    "dev": "nuxt dev",
-    "generate": "nuxt generate",
-    "preview": "nuxt preview",
-    "postinstall": "nuxt prepare",
-    "tauri": "tauri"
+    "dev": "node .electron-nuxt/dev.js",
+    "build": "node .electron-nuxt/build.js",
+    "lint": "node_modules/.bin/eslint --ext .js,.vue -f ./node_modules/eslint-friendly-formatter ./src",
+    "lint:fix": "yarn lint --fix",
+    "preinstall": "node .electron-nuxt/check-engines.js",
+    "postinstall": "electron-builder install-app-deps & yarn lint:fix"
+  },
+  "keywords": [],
+  "author": "DiabloSat <progzone122@gmail.com>",
+  "license": "MIT",
+  "homepage": "https://github.com/michalzaq12/electron-nuxt/blob/master/README.md",
+  "engines": {
+    "node": ">=14.14.9"
+  },
+  "resolutions": {
+    "@types/node": "14.14.9"
   },
   "devDependencies": {
-    "@tauri-apps/cli": "^1.2.3",
-    "autoprefixer": "^10.4.13",
-    "nuxt": "^3.1.2",
-    "nuxt-icon": "^0.5.0",
-    "postcss": "^8.4.21",
-    "sass": "^1.69.4"
+    "@babel/eslint-parser": "7.16.3",
+    "@mdi/font": "^6.4.95",
+    "@nuxtjs/eslint-config": "8.0.0",
+    "@nuxtjs/vuetify": "^1.12.1",
+    "@xpda-dev/core": "^0.1.6",
+    "@xpda-dev/electron-builder": "^0.2.1",
+    "@xpda-dev/electron-launcher": "^0.3.0",
+    "@xpda-dev/webpack-step": "^0.1.6",
+    "cross-env": "^7.0.3",
+    "deepmerge": "^4.2.2",
+    "electron": "^16.0.5",
+    "electron-builder": "^22.14.5",
+    "electron-devtools-installer": "^3.2.0",
+    "eslint": "8.1.0",
+    "eslint-friendly-formatter": "4.0.1",
+    "eslint-loader": "4.0.2",
+    "eslint-plugin-nuxt": "^3.1.0",
+    "eslint-plugin-vue": "^8.1.1",
+    "node-sass": "^6.0.1",
+    "nuxt": "^2.15.8",
+    "roboto-fontface": "^0.10.0",
+    "sass-loader": "10",
+    "vuetify": "^2.5.10",
+    "webpack": "^4.46.0",
+    "webpack-node-externals": "^3.0.0"
   },
-  "type": "module",
   "dependencies": {
-    "@nuxtjs/tailwindcss": "^6.3.1",
-    "@pinia-plugin-persistedstate/nuxt": "^1.1.2",
-    "@pinia/nuxt": "^0.5.1",
-    "@tauri-apps/api": "^1.2.0",
-    "axios": "^1.5.1",
-    "daisyui": "^3.9.3",
-    "needle": "^3.2.0",
-    "theme-change": "^2.5.0",
-    "vue3-perfect-scrollbar": "^1.6.1"
+    "@nuxtjs/axios": "^5.13.6",
+    "@thedvxchsquad/kodikwrapper": "^1.0.3",
+    "aes-encryption": "^1.0.4",
+    "appdata-path": "^1.0.0",
+    "date-fns": "^2.29.3",
+    "discord-rpc": "^4.0.1",
+    "express": "^4.18.2",
+    "global": "^4.4.0",
+    "hls.js": "^1.2.8",
+    "ncp": "^2.0.0",
+    "node-shikimori-api": "^1.1.3",
+    "nodemon": "^2.0.20",
+    "plyr": "^3.7.3",
+    "postcss": "^8.4.19",
+    "sass": "^1.55.0",
+    "shikimori-api-node": "^1.0.3",
+    "user-appdata": "^0.1.2",
+    "vue-infinite-loading": "^2.4.5",
+    "vue-plyr": "^7.0.0",
+    "vuetify-loader": "^1.9.2"
   }
 }

@@ -18,8 +18,10 @@
             <v-expansion-panel-header color="primary">{{ next_episode_at(date) }}</v-expansion-panel-header>
             <v-expansion-panel-content color="primary">
               <div v-for="anime in animes2">
-                <v-row class="ml-2 mr-2 mt-4 mb-3 anime rounded-lg" @click="$router.push({ name: 'watch', query: { id: anime.id } })">
-                  <img :src="'https://shikimori.me' + anime.image.original" style="width: 6em;" alt="" srcset="" class="rounded-lg">
+                <v-row class="ml-2 mr-2 mt-4 mb-3 anime rounded-lg"
+                  @click="$router.push({ name: 'watch', query: { id: anime.id } })">
+                  <img :src="'https://shikimori.me' + anime.image.original" style="width: 6em;" alt="" srcset=""
+                    class="rounded-lg">
                   <v-col class="ml-4">
                     <h4>{{ anime.russian }}</h4>
                     <v-chip-group>
@@ -54,7 +56,7 @@ import { format } from 'date-fns'
 const ShikimoriAPI = require('~/assets/shikimori/index')
 const shiki = new ShikimoriAPI()
 export default {
-  name: 'calendar_ongoings',
+  name: 'CalendarOngoings',
   layout: 'default',
   data() {
     return {
@@ -73,25 +75,27 @@ export default {
     if (this.account !== null && this.account !== undefined) {
       await shiki.user_rates.anime_list(this.account.id, {
         page: this.page,
-        limit: 30
+        limit: 100
       }).then(res => {
         // console.log(res);
-        this.ongoings = res.filter((data) => data.anime.status === "ongoing");
-      });
+        this.ongoings = res.filter(data => data.anime.status === 'ongoing')
+      })
       console.log(this.ongoings)
       // let animes2 = {};
-      let next_episode_at;
+      let next_episode_at
       for (const anime in this.ongoings) {
-        await shiki.animes.get(this.ongoings[anime].anime.id).then((resp) => {
-          next_episode_at = resp.next_episode_at.split("T")[0];
-          if (next_episode_at in this.animes) {
-            this.$set(this.animes[next_episode_at], this.animes[next_episode_at].length, resp);
-          } else {
-            this.$set(this.animes, [next_episode_at], [resp]);
-          }
-        });
+        setTimeout(async (anime) => {
+          await shiki.animes.get(this.ongoings[anime].anime.id).then(resp => {
+            const next_episode_at = resp.next_episode_at.split('T')[0];
+            if (next_episode_at in this.animes) {
+              this.$set(this.animes[next_episode_at], this.animes[next_episode_at].length, resp);
+            } else {
+              this.$set(this.animes, [next_episode_at], [resp]);
+            }
+          });
+        }, 500 * anime, anime);
       }
-      console.log(this.animes);
+      console.log(this.animes)
     }
   },
   infiniteScroll($state) {
@@ -120,7 +124,7 @@ export default {
       return date
     }
   }
-} 
+}
 </script>
 <style lang="scss"></style>
 <style scoped lang="scss">

@@ -56,7 +56,7 @@ export default {
   },
   watch: {
     computed_image () {
-      console.log(this.params.image.original);
+      console.log(this.params.image.original)
       this.image = 'https://shikimori.me' + this.params.image.original
     },
     computed_title () {

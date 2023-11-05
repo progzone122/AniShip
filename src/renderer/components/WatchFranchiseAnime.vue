@@ -32,10 +32,10 @@ export default {
   },
   methods: {
     async select (id) {
-      const shikimori = await shiki.animes.get(id);
+      const shikimori = await shiki.animes.get(id)
       this.$nuxt.$emit('watchFranchiseAnime', {
         shikimori
-      });
+      })
     }
   }
 }

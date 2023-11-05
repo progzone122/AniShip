@@ -3,8 +3,10 @@
     <v-col>
       <div class="rounded-lg pa-8" width="35avw" color="primary">
         <v-row class="align-center">
-          <a href="https://progzone122.github.io/anderia-minigame/" target="_blank"><img src="~/assets/logo.svg" alt=""
-              srcset="" class="aniship-icon"></a>
+          <a href="https://progzone122.github.io/anderia-minigame/" target="_blank"><img
+            src="~/assets/logo.svg" alt=""
+            srcset="" class="aniship-icon"
+          ></a>
           <v-col>
             <h1>AniShip</h1>
             <p style="opacity: 0.9;">Версия: {{ suffix + version }}</p>
@@ -18,10 +20,10 @@
 export default {
   name: 'Settings',
   layout: 'default',
-  data() {
+  data () {
     return {
       suffix: 'night-',
-      version: '0.0.4'
+      version: '0.0.4-2'
     }
   }
 }

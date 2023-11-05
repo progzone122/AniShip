@@ -4,12 +4,12 @@ const shiki = new Shikimori()
 
 export const state = () => ({
   animes: [
-    "asdasd"
+    'asdasd'
   ]
 })
 
 export const mutations = {
-  setOngoingsCalendar(state, obj){
-    state.animes = obj;
+  setOngoingsCalendar (state, obj) {
+    state.animes = obj
   }
 }

@@ -73,14 +73,15 @@
 </template>
 <script>
 import { mapGetters, mapActions } from 'vuex'
-const Shikimori = require('shikimori-api-node')
+const Shikimori = require('../assets/shikimori')
 const shiki = new Shikimori()
 
 export default {
   data: () => ({
     dialog: false,
     e1: 1,
-    steps: 2
+    steps: 2,
+    code: null
   }),
 
   computed: {
@@ -106,11 +107,7 @@ export default {
     },
     auth (authcode) {
       shiki.auth.login({
-        clientid: '2Ajm5Jmvf2kGKEDlilk2Pka85p2b57H4VTYS6qvWc9w',
-        clientsecret: 'YDg7tpBhQBGAUFY9zZbU89sL6kF9mtJztERjTWtNi6o',
         authcode,
-        useragent: 'AniShip', // only name of your app
-        redirecturi: 'urn:ietf:wg:oauth:2.0:oob' // optional: 'urn:ietf:wg:oauth:2.0:oob' by default
       }).then(async res => {
         console.log(res)
         localStorage.setItem('access_token', res.accesstoken)
