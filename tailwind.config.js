@@ -31,6 +31,7 @@ module.exports = {
           /* Buttons */
           ".btn": {
             "border-radius": "1.5em"
+
           },
           /* BigBanner */
           ".bigBannerWatchButton": {
@@ -81,7 +82,7 @@ module.exports = {
             "background": "#090909"
           },
           ".bgColor2": {
-
+            "background": "#1c1b1b"
           }
         }
       }

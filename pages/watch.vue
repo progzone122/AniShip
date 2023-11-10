@@ -18,7 +18,7 @@
           </div>
           <div class="divider"></div>
           <div class="w-full flex flex-col gap-2">
-            <button class="btn watchButton">
+            <button class="btn watchButton" @click="navigateTo({ path: '/player', query: { shikiId: anime.id } })">
               Смотреть
             </button>
           </div>

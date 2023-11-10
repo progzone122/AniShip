@@ -1,13 +1,13 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-	app:{
+	app: {
 		head: {
 			title: 'AniShip',
 			htmlAttrs: {
-			  lang: 'ru',
+				lang: 'ru',
 			},
 			link: [
-			  { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Poppins' },
+				{ rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Poppins' },
 			],
 		},
 	},
@@ -34,6 +34,7 @@ export default defineNuxtConfig({
 	},
 	css: [
 		'@/assets/css/main.css',
+		'@/assets/css/bgAnimations/squares1.css'
 	],
 	ssr: false,
 })

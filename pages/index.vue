@@ -1,10 +1,12 @@
 <template>
-	<div class="w-[100vw] h-[80vh] ml-[-5em] mt-[-2em]">
+  <div class="w-[100vw] h-[80vh] ml-[-5em] mt-[-2em]">
     <BigBanner :anime="bigBannerStore.animes[0]" />
   </div>
   <div class="ml-[-5em] w-[100vw] pl-[6em] pr-[2em] mt-12 mb-16">
-    <MainAnimes name="Онгоинги" :main_animes="animeStore.ongoings" link_name="Загрузить больше онгоингов" link="ongoings" />
-    <MainAnimes name="Лучшие релизы" :main_animes="animeStore.ranked_released" link_name="Загрузить больше лучших релизов" link="rank_released" />
+    <MainAnimes name="Онгоинги" :main_animes="animeStore.ongoings" link_name="Загрузить больше онгоингов"
+      link="ongoings" />
+    <MainAnimes name="Лучшие релизы" :main_animes="animeStore.ranked_released" link_name="Загрузить больше лучших релизов"
+      link="rank_released" />
   </div>
   <div class="w-[100vw] h-[80vh] ml-[-5em] mt-[-2em]">
     <BigBanner :anime="bigBannerStore.animes[1]" />
@@ -19,11 +21,13 @@ import { account } from "~/store/account.js";
 import { bigBanner } from "../store/bigBanner.js";
 import { animes } from "~/store/animes.js";
 
+await navigateTo("/welcome");
+
 // const accountStore = account();
 const bigBannerStore = bigBanner();
 const animeStore = animes();
 
-if(bigBannerStore.animes.length === 0){
+if (bigBannerStore.animes.length === 0) {
   console.log(bigBannerStore.animes);
   bigBannerStore.fetchAnimes();
 }
