@@ -24,6 +24,7 @@
     "@tauri-apps/api": "^1.2.0",
     "axios": "^1.5.1",
     "daisyui": "^3.9.3",
+    "gsap": "^3.12.2",
     "needle": "^3.2.0",
     "theme-change": "^2.5.0",
     "vue3-perfect-scrollbar": "^1.6.1"

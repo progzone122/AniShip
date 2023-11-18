@@ -27,7 +27,8 @@ export default defineNuxtConfig({
 		"nuxt-icon",
 	],
 	plugins: [
-		"@/plugins/scrollbarPlugin.js"
+		"@/plugins/scrollbarPlugin.js",
+		"@/plugins/gsapPlugin.js"
 	],
 	imports: {
 		dirs: ["store"]
