@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col gap-2">
-    <div class="leftMenu w-[100%] flex flex-col items-center pt-4 pb-4">
+    <div class="leftMenu bgColor1 w-[100%] flex flex-col items-center pt-4 pb-4">
       <div class="avatar online cursor-pointer">
         <div class="w-11 h-11 rounded-full">
           <img src="../assets/858935.jpg" />

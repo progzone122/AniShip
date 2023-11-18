@@ -20,7 +20,6 @@ module.exports = {
           "accent": "#ff1e6f",
           /* Left Menu */
           ".leftMenu": {
-            "background": "#090909",
             "border-radius": "8px"
           },
           /* */
@@ -31,12 +30,10 @@ module.exports = {
           /* Buttons */
           ".btn": {
             "border-radius": "1.5em"
-
           },
           /* BigBanner */
           ".bigBannerWatchButton": {
             "border": "0.3em solid rgba(238,0,86,0.42)"
-            // background: "rgba(238,0,86,0.82)"
           },
           ".bigBannerAnimeH1": {
             "color": "white"

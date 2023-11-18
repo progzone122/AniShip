@@ -30,9 +30,23 @@
       <div class="context" id="section2">
         <Icon name="material-symbols:admin-panel-settings-rounded" size="70px" color="white" class="mb-[-8px]" />
         <h1>AniShip Connect</h1>
-
-        <div class="textP font-bold continue">
-          <p @click="toSection('section1')">Отмена</p>
+        <div class="form-control w-full max-w-xs text-white">
+          <label class="label">
+            <span class="label-text text-white">Email</span>
+          </label>
+          <input type="text" class="input input-bordered w-full max-w-xs input-primary focus:border-0" />
+          <label class="label">
+            <span class="label-text text-white">Пароль</span>
+          </label>
+          <input type="text" class="input input-bordered w-full max-w-xs input-primary focus:border-0" />
+        </div>
+        <div class="flex gap-[86px]">
+          <div class="textP font-bold continue mt-4">
+            <p @click="toSection('section1')">Вход</p>
+          </div>
+          <div class="textP font-bold continue mt-4">
+            <p @click="toSection('section1')">Отмена</p>
+          </div>
         </div>
       </div>
             <div class="area">
