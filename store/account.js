@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
-import Wrapper from "../assets/shikimori/index.js";
-const shiki = new Wrapper();
+import Api from "../assets/api/index.js";
+const api = new Api();
 
 
 export const account = defineStore({
@@ -12,29 +12,8 @@ export const account = defineStore({
         }
     },
     actions: {
-        async fetchShikimoriAuth(code) {
-            await shiki.auth.login({
-                authcode: code,
-            }).then(res => {
-                console.log(res)
-                this.auth = res;
-            });
-        },
-        async fetchRefreshAuth () {
-            this.account = await shiki.auth.refreshToken({
-                refreshtoken: this.auth.refreshtoken,
-            }).then(res => {
-                console.log(res);
-                return res
-            })
-        },
-        async fetchProfile () {
-            const resp = await shiki.users.whoami({
-                refreshtoken: this.auth.accesstoken
-            })
-            if (this.auth.accesstoken !== null && this.auth.accesstoken !== undefined && typeof this.auth.accesstoken !== 'object') {
-                this.account = resp;
-            }
+        login() {
+
         }
     },
     getters: {
