@@ -1,5 +1,8 @@
 # AniShip
 
+> Проект был заморожен
+> Пока нет времени им заниматься, нужно его переписывать с нуля
+
 ![изображение](https://user-images.githubusercontent.com/80642969/232580261-4d5cd52c-0fc2-41a1-b7f9-de5929018ce7.png)
 ![изображение](https://user-images.githubusercontent.com/80642969/232579839-3b1ba5ad-feac-43f3-8347-01a386c4df8f.png)
 ![изображение](https://user-images.githubusercontent.com/80642969/232579947-ab3ddbbd-f19f-43ae-b1ac-7520b1433471.png)
